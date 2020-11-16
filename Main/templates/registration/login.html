@@ -1,0 +1,23 @@
+{% extends  'Main/home.html' %}
+
+{% block main %}
+<div class="w3-row w3-content w3-green w3-wide" style="max-width:1600px;min-width:500px" id="home">
+    <div class="w3-col l6 m12 s12 w3-padding">
+        <h1 class="w3-xxlarge">Nutricao</h1>
+    </div>
+    <form class="w3-col l6 m12 s12 w3-padding" style="height:500px" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+
+        <p>
+            <label class="w3-large">Usuário</label>
+            <input class="w3-input w3-border" type="text" name="username"/>
+        </p>
+        <p>
+            <label class="w3-large">Senha</label>
+            <input class="w3-input w3-border" type="password" name="password"/>
+        </p>
+        <button type="submit">Login</button>
+    </form>
+</div>
+{% endblock %}
