@@ -47,6 +47,8 @@ select * from auth_user
 select * from "Main_foodportion"
 
 select * from "Main_peoplegroup"
+select * from "Main_usergroup"
+select * from "Main_usergroup_food"
 
 delete from users
 

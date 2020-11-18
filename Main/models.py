@@ -13,7 +13,6 @@ class PeopleGroup(models.Model):
     def __str__(self):
         return self.name
 
-
 class UserGroup(models.Model):
     user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
     group = models.ForeignKey("PeopleGroup", on_delete=models.SET_NULL, null=True)

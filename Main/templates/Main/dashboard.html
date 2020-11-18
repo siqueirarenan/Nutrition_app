@@ -1,10 +1,10 @@
 {% extends  'Main/base.html' %}
 
 {% block main %}
-<div class="w3-container w3-content w3-wide" style="max-width:1600px;min-width:500px" id="home">
-    <div class="w3-container w3-padding w3-green">
+<div class="w3-content w3-wide" style="max-width:1600px;" id="home">
+    <div class="w3-container w3-padding w3-white">
         {% if user_request.is_authenticated %}
-        <h1 class="w3-xxlarge">Bem-vindo, {{ user_data.first_name }}!</h1>
+        <h1 class="w3-xxlarge">Bem-vindo, {{ user_data1.first_name }}!</h1>
         <a href="/logout"><h1 class="w3-xlarge">Logout</h1></a>
         {% else %}
         <h1 class="w3-xxlarge">Bem-vindo!</h1>
@@ -12,16 +12,43 @@
         {% endif %}
     </div>
 
-    <div class="w3-container w3-orange" style="max-width:600px;min-width:400px">
-        {% if user_group %}
-        <h1 class="w3-xlarge">Grupo {{ user_group.group.name }} em andamento a {{days_in_action}}!</h1>
+    <div class="w3-container w3-green">
+        {% if group %}
+        <h1 class="w3-xlarge">Grupo {{ group }} - em andamento a {{date_passed}} dias!</h1>
         {% else %}
         <h1 class="w3-xlarge">Você nao está em nenhum grupo</h1>
         {% endif %}
     </div>
 
-    <div class="w3-container w3-orange" style="max-width:600px;min-width:400px">
-
+    <div class="w3-row">
+        <div class="w3-col w3-card4 w3-button l4 m6 s12 w3-amber w3-padding">
+            <h3>Meu protocolo</h3>
+        </div>
+        <div class="w3-col w3-card4 w3-button l4 m6 s12 w3-amber w3-padding">
+            <h3>Alimentos favoritos ()</h3>
+        </div>
+        <a href="recipes">
+            <div class="w3-col w3-card4 w3-button l4 m6 s12  w3-amber w3-padding">
+                <h3>Receitas favoritas ()</h3>
+            </div>
+        </a>
+        <div class="w3-col w3-card4 w3-button l4 m6 s12  w3-amber w3-padding">
+            <h3>Protocolo atual</h3>
+        </div>
+        <div class="w3-col w3-card4 w3-button l4 m6 s12 w3-amber w3-padding">
+            <h3>Grupos de substituição</h3>
+        </div>
+        <a href="recipes">
+            <div class="w3-col w3-card4 w3-button l4 m6 s12 w3-amber w3-padding">
+                <h3>Receitas</h3>
+            </div>
+        </a>
+        <div class="w3-col w3-card4 w3-button l4 m6 s12 w3-amber w3-padding">
+            <h3>Listas de compras</h3>
+        </div>
+        <div class="w3-col w3-card4 w3-button l4 m6 s12 w3-amber w3-padding">
+            <h3>Documentos</h3>
+        </div>
     </div>
-
+</div>
 {% endblock %}

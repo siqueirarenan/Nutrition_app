@@ -1,14 +1,59 @@
 {% extends  'Main/base.html' %}
 
 {% block main %}
-<div class="w3-container w3-content w3-wide" style="max-width:1600px;min-width:500px" id="home">
-    <div class="w3-container w3-padding w3-green">
-        <h1 class="w3-xxlarge">Nutricao</h1>
+{% load static %}
+<div class="w3-content w3-wide" id="home" style="max-width:1600px">
+    <div class="w3-display-container w3-padding w3-white">
+        <img class="w3-image" src="{% static 'reset_capa.png' %}">
     </div>
-    <a href="/login">
-        <div class="w3-container w3-padding w3-orange">
-            <h2 class="w3-xlarge">Entrar</h2>
+    <div class="w3-row"></div>
+        <a href="/login">
+            <div class="w3-col l6 m12 s12 w3-button w3-padding-32 w3-yellow">
+                <h2 class="w3-wide">Entrar</h2>
+            </div>
+        </a>
+        <a href="/registration">
+            <div class="w3-col l6 m12 s12 w3-button w3-padding-32 w3-amber">
+                <h2 class="w3-wide">Cadastre-se</h2>
+            </div>
+        </a>
+    </div>
+
+<!-- About Section -->
+<div class="w3-container w3-padding-32 " id="about">
+    <h3 class="w3-border-bottom w3-text-indigo w3-padding-16"><b>Sobre a criadora</b></h3>
+
+    <div class="w3-container" style="justify-content: center" >
+        <div class="w3-row-padding">
+            <div class="w3-col l3 m4 s12">
+                <img class="w3-padding" src="{% static 'marcela.png'%}" alt="Marcela" style="max-height:300px;width:auto">
+            </div>
+            <div class="w3-col l9 m12 s12">
+                <h4>Tudo o que você vivenciou fez com que você chegasse até
+                    aqui. Faz parte de quem você é e não há nada para se
+                    envergonhar. Corpos são cíclicos, e tudo bem, não estou aqui
+                    para te julgar. Tudo o que temos é o agora, hoje e aqui. Então
+                    chegou a hora de respirar fundo, deixar para trás o que passou
+                    e focar no agora. É hora de dar um RESET nos comandos
+                    errados que você tem a tanto tempo enviado ao seu corpo. É
+                    hora de se REcompor, REdefinir metas e REestabelecer o
+                    controle da sua vida. Hora de fazer dar certo!
+                </h4>
+                <h2 class="w3-padding w3-serif" style="margin:auto">
+                    <i>"Você está a um clique de fazer parte desse time!
+                        Vamos juntos?"</i>
+                </h2>
+            </div>
+
+            <span class="w3-right-align w3-block" id="socialNetworks">
+              <a href="" target="_blank" >
+                <img class="w3-image w3-padding" src="{% static 'instagram.png' %}" style="width:93px"></a>
+              <a href="" target="_blank" style="width:80px">
+                <img class="w3-image w3-padding" src="{% static 'facebook.png' %}" style="width:100px"></a>
+          </span>
         </div>
-    </a>
+    </div>
+</div>
+
 </div>
 {% endblock %}

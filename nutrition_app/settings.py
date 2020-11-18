@@ -45,7 +45,8 @@ SECRET_KEY = key[0]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ["localhost", "127.0.0.1",".herokuapp.com"]
+ALLOWED_HOSTS = ['*']
+#ALLOWED_HOSTS = ["localhost", "127.0.0.1",".herokuapp.com"]
 
 ADMINS = [('renansiqueira', 'renansiqueira@gmail.com')]
 
@@ -78,7 +79,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',   #prevent clickjacking
 ]
 
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SECURE = False
 #X_FRAME_OPTIONS = 'SAMEORIGIN'
 ROOT_URLCONF = 'nutrition_app.urls'
@@ -109,18 +110,27 @@ WSGI_APPLICATION = 'nutrition_app.wsgi.application'
 # python manage.py migrate
 # python manage.py createsuperuser
 
-DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-         'NAME': 'd70b90u9f6om4h',
-         'USER': 'kpxrkzhcjvwaca',
-         'PASSWORD': 'c8432332aaaf015c02045f817d923341c43b038035c6e57abe118a170a2fce59',
-         'HOST': 'ec2-34-232-24-202.compute-1.amazonaws.com',
-         'PORT': '5432',
-     }
- }
+# DATABASES = {
+#      'default': {
+#          'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#          'NAME': 'd70b90u9f6om4h',
+#          'USER': 'kpxrkzhcjvwaca',
+#          'PASSWORD': 'c8432332aaaf015c02045f817d923341c43b038035c6e57abe118a170a2fce59',
+#          'HOST': 'ec2-34-232-24-202.compute-1.amazonaws.com',
+#          'PORT': '5432',
+#      }
+#  }
 
-#DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'nutrition',
+        'USER': 'postgres',
+        'PASSWORD': 'raquoasi',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
+}
 
 
 # Password validation

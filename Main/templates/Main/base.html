@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>App de nutricao</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     {% load static %}
+    <link rel="stylesheet" href="{% static 'main.css'%}">
     <script>
 
     </script>
@@ -14,6 +16,11 @@
 
 {% block main %}
 {% endblock %}
+
+<!-- Footer -->
+<footer class="w3-right-align w3-block w3-orange w3-padding-16">
+    <h6 class="w3-padding">Web app desenvolvido por <a href="https://renansiqueira.herokuapp.com">Renan Siqueira</a>.</h6>
+</footer>
 
 </body>
 </html>
