@@ -66,3 +66,20 @@ class Recipe(models.Model):
     name = models.CharField(max_length=100, default="")
     ingredients = models.TextField(default="", blank=True,)
     description = models.TextField(default="", blank=True,)
+
+# TASKS
+
+class TextTask(models.Model):
+    id = models.IntegerField(primary_key=True)
+    title = models.CharField(max_length=500, default="")
+    text = models.TextField(default="", blank=True,)
+    def __str__(self):
+        return self.title
+
+class ChallengeTask(models.Model):
+    id = models.IntegerField(primary_key=True)
+    title = models.CharField(max_length=500, default="")
+    text = models.TextField(default="", blank=True,)
+    image = models.ImageField()
+    def __str__(self):
+        return self.title

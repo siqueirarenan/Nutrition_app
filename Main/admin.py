@@ -21,6 +21,10 @@ class ProtocolMealAdmin(admin.ModelAdmin):
     list_display = ('protocol','meal','description')
 class UserGroupAdmin(admin.ModelAdmin):
     list_display = ('user','group')
+class TextTaskAdmin(admin.ModelAdmin):
+    list_display = ('id','title')
+class ChallengeTaskAdmin(admin.ModelAdmin):
+    list_display = ('id','title')
 
 admin.site.register(UserGroup, UserGroupAdmin)
 admin.site.register(PeopleGroup, PeopleGroupAdmin)
@@ -33,3 +37,6 @@ admin.site.register(Meal, MealAdmin)
 admin.site.register(MealUnit, MealUnitAdmin)
 admin.site.register(MealOption)
 admin.site.register(ProtocolMeal, ProtocolMealAdmin)
+
+admin.site.register(TextTask, TextTaskAdmin)
+admin.site.register(ChallengeTask, ChallengeTaskAdmin)

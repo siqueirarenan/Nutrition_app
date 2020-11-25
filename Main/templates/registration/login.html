@@ -1,5 +1,8 @@
 {% extends  'Main/base.html' %}
 
+{% load socialaccount %}
+{% providers_media_js %}
+
 {% block main %}
 <div class="w3-row w3-content w3-green w3-wide" style="max-width:1600px" id="home">
     <div class="w3-col l6 m12 s12 w3-padding">
@@ -7,20 +10,34 @@
     </div>
     <form class="w3-col l6 m12 s12 w3-padding" style="height:500px" method="POST">
         {% csrf_token %}
-<!--        <input type="hidden" name="next" value="{{ next }}">-->
 
         <p>
-            <label class="w3-large">Usuário</label>
+            <label class="w3-large">Usuário(a)</label>
             <input class="w3-input w3-border" type="text" name="username"/>
         </p>
         <p>
             <label class="w3-large">Senha</label>
             <input class="w3-input w3-border" type="password" name="password"/>
         </p>
-        <button type="submit">Login</button>
+        <button type="submit" class="w3-button w3-block w3-orange">Entrar</button>
         {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
+        <p>Usuário(a) ou senha incorretos. Tente novamente.</p>
         {% endif %}
+        <a href="{% provider_login_url 'google' %}">
+            <div class="w3-button w3-block w3-indigo">
+                Entrar com Google
+            </div>
+        </a>
+        <a href="{% provider_login_url 'facebook' method='oauth2' %}">
+            <div class="w3-button w3-block w3-indigo">
+                Entrar com Facebook
+            </div>
+        </a>
+        <a href="{% url 'Main:password_reset' %}">
+            <div class="w3-button w3-block w3-indigo">
+                Esqueci minha senha
+            </div>
+        </a>
 <!--        <p><a href="{# url 'password_reset' #}">Lost password?</a></p>-->
     </form>
 </div>

@@ -1,0 +1,22 @@
+{% extends 'Main/base.html' %}
+
+{% block main %}
+
+<div class="w3-row w3-content w3-green w3-wide" style="max-width:1600px" id="home">
+    <div class="w3-col l6 m12 s12 w3-padding">
+        <h3>Aconteceu um erro ao tentar conectar por rede social.
+        Por favor, tente novamente ou cadastre-se.</h3>
+    </div>
+    <a href="/">
+        <div class="w3-button w3-block w3-indigo">
+            Página inicial
+        </div>
+    </a>
+    <a href="/registration">
+        <div class="w3-button w3-block w3-indigo">
+            Cadastre-se
+        </div>
+    </a>
+</div>
+
+{% endblock %}

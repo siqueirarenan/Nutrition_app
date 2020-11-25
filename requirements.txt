@@ -2,3 +2,6 @@ psycopg2-binary
 dj-database-url
 djangoajax
 whitenoise
+djangorestframework
+markdown
+Pillow

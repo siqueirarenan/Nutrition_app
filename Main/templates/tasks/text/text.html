@@ -1,0 +1,48 @@
+{% extends  'Main/base.html' %}
+
+{% block main %}
+<div class="w3-content w3-wide" style="max-width:1600px;" id="home">
+    <div class="w3-container  w3-top w3-padding w3-white">
+        <a href="/dashboard">
+            <h1 class="w3-large">Voltar</h1>
+        </a>
+    </div>
+    <div class="w3-container w3-padding w3-white"><h1 class="w3-large">.</h1></div>
+    <div class="w3-container w3-padding w3-green">
+        <h1 class="w3-xlarge">Receitas</h1>
+    </div>
+    {% for r in recipes %}
+    <button class="w3-card4 w3-block w3-button w3-amber w3-padding"
+            onclick="accordion('{{ r.name }}')">
+        <h2>{{ r.name }}</h2>
+    </button>
+    <div id="{{ r.name }}" class="w3-hide">
+        <div class="w3-container w3-sand">
+            <h3>Ingredientes:</h3>
+            <h4>{% for line in r.ingredients.splitlines %}
+                    {{ line }} <br>
+                {% endfor %}
+            </h4>
+        </div>
+        <div class="w3-container w3-white">
+            <h3>Preparo:</h3>
+            <h4>{% for line in r.description.splitlines %}
+                {{ line }} <br>
+                {% endfor %}
+            </h4>
+        </div>
+    </div>
+    {% endfor %}
+    <script>
+        function accordion(id) {
+          var x = document.getElementById(id);
+          if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+          } else {
+            x.className = x.className.replace(" w3-show", "");
+          }
+        }
+    </script>
+
+</div>
+{% endblock %}

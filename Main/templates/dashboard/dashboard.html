@@ -1,0 +1,93 @@
+{% extends  'dashboard/base.html' %}
+
+{% load socialaccount %}
+{% get_social_accounts user as accounts %}
+
+{% block main %}
+<div class="w3-content w3-wide" style="max-width:1600px;height:100%" id="home">
+    <div class="w3-container w3-padding w3-white">
+        {% if user_request.is_authenticated %}
+        <div class="w3-dropdown-hover w3-white" style="float: right;">
+            <button class="w3-button">
+                <i class="fas fa-user-circle" style="font-size:50px;color:#031C52F3;text-shadow: 2px 2px orange"></i>
+            </button>
+            <div class="w3-dropdown-content w3-bar-block w3-border"  style="right:0">
+                <a href="/logout"><h3 class="w3-bar-item w3-button">Sair</h3></a>
+                {% if accounts %}
+                {% else %}
+                <a href="/password-change/"><h3 class="w3-bar-item w3-button">Alterar senha</h3></a>
+                {% endif %}
+                <a href="/signout"><h3 class="w3-bar-item w3-button">Deletar conta</h3></a>
+            </div>
+        </div>
+        <h1 class="w3-xxlarge" style="width:75%">Bem-vindo, {{ user_data1.first_name }}!</h1>
+        {% else %}
+        <h1 class="w3-xxlarge">Bem-vindo!</h1>
+        <a href="/registration"><h1 class="w3-xlarge">Cadastre-se aqui.</h1></a>
+        {% endif %}
+
+    </div>
+
+    <div class="w3-container w3-orange">
+        {% if group %}
+        <h1 class="w3-xlarge">Grupo {{ group }} - em andamento há {{date_passed}} dias!</h1>
+        {% else %}
+        <h1 class="w3-xlarge">Você nao está em nenhum grupo</h1>
+        {% endif %}
+    </div>
+
+    <div style="padding-top:50px;">
+
+        <div style="text-align:center;display:block"> <!--linha-->
+
+            <!--item-->
+            <a href="">
+            <div style="width:180px;height:200px;display: inline-block;margin:auto;vertical-align: top">
+                <div class="center" style="text-align:left;width:110px;height:110px">
+                    <svg width="110" height="110">
+                        <circle cx="55" cy="55" r="50" stroke="grey" stroke-width="7" fill="yellow" />
+                    </svg>
+                    <i class="fas fa-bolt" style="font-size:60px;color:#031C52F3;position:relative;top:-87px;right:-38px"></i>
+                </div>
+                <div class="center" style="width:180px;height:50px;">
+                    <h3 style="text-align:center">fdasdfas fddafdasdfa</h3>
+                </div>
+            </div>
+            </a>
+
+        </div> <!--fim da linha-->
+
+    </div>
+
+<!--    <div class="w3-row">
+        <div class="w3-col w3-card4 w3-button l4 m6 s12 w3-amber w3-padding">
+            <h3>Meu protocolo</h3>
+        </div>
+        <div class="w3-col w3-card4 w3-button l4 m6 s12 w3-amber w3-padding">
+            <h3>Alimentos favoritos ()</h3>
+        </div>
+        <a href="recipes">
+            <div class="w3-col w3-card4 w3-button l4 m6 s12  w3-amber w3-padding">
+                <h3>Receitas favoritas ()</h3>
+            </div>
+        </a>
+        <div class="w3-col w3-card4 w3-button l4 m6 s12  w3-amber w3-padding">
+            <h3>Protocolo atual</h3>
+        </div>
+        <div class="w3-col w3-card4 w3-button l4 m6 s12 w3-amber w3-padding">
+            <h3>Grupos de substituição</h3>
+        </div>
+        <a href="recipes">
+            <div class="w3-col w3-card4 w3-button l4 m6 s12 w3-amber w3-padding">
+                <h3>Receitas</h3>
+            </div>
+        </a>
+        <div class="w3-col w3-card4 w3-button l4 m6 s12 w3-amber w3-padding">
+            <h3>Listas de compras</h3>
+        </div>
+        <div class="w3-col w3-card4 w3-button l4 m6 s12 w3-amber w3-padding">
+            <h3>Documentos</h3>
+        </div>
+    </div>-->
+</div>
+{% endblock %}

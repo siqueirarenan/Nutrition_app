@@ -1,11 +1,11 @@
 {% extends  'Main/base.html' %}
 
 {% block main%}
-<div class="w3-row w3-content w3-green w3-wide" style="max-width:1600px;height:100%" id="home">
+<div class="w3-container w3-row w3-content w3-green w3-wide" style="max-width:1600px" id="home">
     <div class="w3-col l6 m12 s12 w3-padding">
         <h1 class="w3-xxlarge">Registro</h1>
     </div>
-    <form class="w3-col l6 m12 s12 w3-padding" style="height:500px" method="POST">
+    <form class="w3-col l6 m12 s12 w3-padding" style="" method="POST">
         {% csrf_token %}
         <p>
             <label class="w3-large">Nome de Usuário</label>
@@ -52,7 +52,7 @@
         <p style="color: red">{{ error }}</p>
         {% endfor %}
 
-        <button type="submit" id="registration_submit">Registrar</button>
+        <button type="submit" id="registration_submit" class="w3-button w3-padding-16 w3-block w3-orange">Registrar</button>
     </form>
 </div>
 {% endblock %}

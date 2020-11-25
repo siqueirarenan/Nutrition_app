@@ -1,3 +1,40 @@
 a{
     text-decoration-line: none;
 }
+
+html, body {
+  height: 100%;
+}
+
+.re-font{
+    font-family: 'Bahnschrift' !important
+}
+
+h1, h2, h3, h4, h5, h6, i{
+ color:#031C52 !important
+}
+
+.center {
+  margin: auto;
+
+  padding: 0px;
+}
+
+.my-top{
+position:fixed;
+width:100%;
+z-index:1;
+border: 5px
+}
+
+@media (max-width:768px){
+    .my-top{
+        bottom:0
+        }
+    }
+
+@media (min-width:768px){
+    .my-top{
+        top:0
+        }
+    }
