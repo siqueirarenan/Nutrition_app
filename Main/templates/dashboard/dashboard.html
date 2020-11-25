@@ -38,24 +38,32 @@
 
     <div style="padding-top:50px;">
 
+        {% for line in grouped_tasks %}
+
         <div style="text-align:center;display:block"> <!--linha-->
 
+            {% for task in line %}
+
             <!--item-->
-            <a href="">
+            <a href="/task/{{task.task_type}}/{{task.id}}">
             <div style="width:180px;height:200px;display: inline-block;margin:auto;vertical-align: top">
                 <div class="center" style="text-align:left;width:110px;height:110px">
                     <svg width="110" height="110">
-                        <circle cx="55" cy="55" r="50" stroke="grey" stroke-width="7" fill="yellow" />
+                        <circle cx="55" cy="55" r="50" stroke="grey" stroke-width="7" fill="{{ task.background_color }}" />
                     </svg>
-                    <i class="fas fa-bolt" style="font-size:60px;color:#031C52F3;position:relative;top:-87px;right:-38px"></i>
+                    <i class="{{ task.font_awesome_icon }}" style="font-size:60px;color:#031C52F3;position:relative;top:-87px;right:-38px"></i>
                 </div>
                 <div class="center" style="width:180px;height:50px;">
-                    <h3 style="text-align:center">fdasdfas fddafdasdfa</h3>
+                    <h3 style="text-align:center">{{ task.name }}</h3>
                 </div>
             </div>
             </a>
 
+            {% endfor %}
+
         </div> <!--fim da linha-->
+
+        {% endfor %}
 
     </div>
 

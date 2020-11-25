@@ -27,6 +27,8 @@ urlpatterns = [
                   path('accounts/', include('allauth.urls')),
 
 
+
+
                   path('api/', include(router.urls)),
                   #path('api-auth/', include('rest_framework.urls'))
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

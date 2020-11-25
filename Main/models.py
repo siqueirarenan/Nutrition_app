@@ -69,17 +69,21 @@ class Recipe(models.Model):
 
 # TASKS
 
-class TextTask(models.Model):
-    id = models.IntegerField(primary_key=True)
+class AllTasks(models.Model):
+    name = models.CharField(max_length=20, default="")
+    position = models.IntegerField(default=1)
+    font_awesome_icon = models.CharField(max_length=100, default="")
+    background_color = models.CharField(max_length=20, default="")
+    def __str__(self):
+        return self.name
+
+class TextTask(AllTasks):
+    task_type = 'text'
     title = models.CharField(max_length=500, default="")
     text = models.TextField(default="", blank=True,)
-    def __str__(self):
-        return self.title
 
-class ChallengeTask(models.Model):
-    id = models.IntegerField(primary_key=True)
+class ChallengeTask(AllTasks):
+    task_type = 'challenge'
     title = models.CharField(max_length=500, default="")
     text = models.TextField(default="", blank=True,)
     image = models.ImageField()
-    def __str__(self):
-        return self.title

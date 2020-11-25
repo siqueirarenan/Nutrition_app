@@ -35,7 +35,7 @@ urlpatterns = [
 
     #TASKS
     path('task/text/<int:text_task_id>', views.text_task, name="text_task"),
-    path('task/challenge', views.challenge_task, name="challenge_task"),
+    #path('task/challenge', views.challenge_task, name="ChallengeTask"),
 
 
 ]

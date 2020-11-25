@@ -35,10 +35,25 @@ def dashboard(request):
     except:
         pass
 
+    #Group tasks by line
+    keys = []
+    for task in TextTask.objects.all():
+        keys += [task.position]
+    for task in ChallengeTask.objects.all():
+        keys += [task.position]
+    grouped_tasks = {}
+    for k in set(keys):
+        grouped_tasks[k] = []
+    for task in TextTask.objects.all():
+        grouped_tasks[task.position] += [task]
+    for task in ChallengeTask.objects.all():
+        grouped_tasks[task.position] += [task]
+
     context = {'user_request': request.user,
                'user_data1': user_data1,
                'group': group,
-               'date_passed': date_passed, }
+               'date_passed': date_passed,
+               'grouped_tasks': grouped_tasks.values()}
     return render(request, 'dashboard/dashboard.html', context)
 
 def registration(request):
@@ -133,7 +148,7 @@ def text_task(request,text_task_id):
     task = TextTask.objects.get(id=text_task_id)
     context = {'title': task.title,
                'text': task.text}
-    return render(request, 'Main/recipes.html', context)
+    return render(request, 'tasks/text.html', context)
 
 
 
