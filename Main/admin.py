@@ -25,6 +25,8 @@ class TextTaskAdmin(admin.ModelAdmin):
     list_display = ('id','title')
 class ChallengeTaskAdmin(admin.ModelAdmin):
     list_display = ('id','title')
+class MultipleChoiceSurveyTaskAdmin(admin.ModelAdmin):
+    list_display = ('question',)
 
 admin.site.register(UserGroup, UserGroupAdmin)
 admin.site.register(PeopleGroup, PeopleGroupAdmin)
@@ -40,3 +42,5 @@ admin.site.register(ProtocolMeal, ProtocolMealAdmin)
 
 admin.site.register(TextTask, TextTaskAdmin)
 admin.site.register(ChallengeTask, ChallengeTaskAdmin)
+admin.site.register(MultipleChoiceSurveyTask, MultipleChoiceSurveyTaskAdmin)
+

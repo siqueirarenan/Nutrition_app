@@ -10,14 +10,15 @@ class PeopleGroup(models.Model):
     date_begin = models.DateField()
     date_end = models.DateField()
     protocol = models.IntegerField()
+    is_active = models.BooleanField(default=True)
     def __str__(self):
         return self.name
 
 class UserGroup(models.Model):
     user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
     group = models.ForeignKey("PeopleGroup", on_delete=models.SET_NULL, null=True)
-    recipes = models.ManyToManyField("Recipe",blank=True)
-    food = models.ManyToManyField("FoodPortion",blank=True)
+    recipes = models.ManyToManyField("Recipe",blank=True, editable=False)
+    food = models.ManyToManyField("FoodPortion",blank=True, editable=False)
     def __str__(self):
         return self.user.username
 
@@ -86,4 +87,20 @@ class ChallengeTask(AllTasks):
     task_type = 'challenge'
     title = models.CharField(max_length=500, default="")
     text = models.TextField(default="", blank=True,)
-    image = models.ImageField()
+    image = models.ImageField(upload_to='static/DB_images')
+
+class MultipleChoiceSurveyTask(AllTasks):
+    task_type = 'multiple_choice_survey'
+    question = models.CharField(max_length=1000)
+    choices = models.TextField(max_length=5000)
+    multiple_choices_allowed = models.BooleanField()
+    def __str__(self):
+        return self.question
+
+class SurveyVote(models.Model):
+    question = models.CharField(max_length=5000)
+    people_group = models.CharField(max_length=5000)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    choice = models.CharField(max_length=5000)
+    def __str__(self):
+        return self.choice

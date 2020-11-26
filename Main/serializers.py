@@ -1,13 +1,21 @@
 from rest_framework import routers, serializers, viewsets
-from Main.models import Recipe
+from Main.models import *
 
 # Serializers define the API representation.
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['url', 'username', 'email', 'first_name','last_name']
+
+
 class RecipeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Recipe
         fields = ['name', 'ingredients', 'description']
 
-# ViewSets define the view behavior.
-class RecipeViewSet(viewsets.ModelViewSet):
-    queryset = Recipe.objects.all()
-    serializer_class = RecipeSerializer
+
+class SurveyVoteSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = SurveyVote
+        fields = ['question', 'people_group', 'user', 'choice']
+

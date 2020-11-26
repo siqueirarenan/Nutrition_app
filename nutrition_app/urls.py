@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
-from Main.serializers import *
+from Main.views import *
 from django.conf.urls.static import static
 from rest_framework import routers
 from django.contrib.auth import views as auth_views
@@ -11,6 +11,8 @@ from allauth.account import views as allauth_views2
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'recipes', RecipeViewSet)
+router.register(r'surveyvotes', SurveyVoteViewSet)
+router.register(r'users', UserViewSet)
 
 urlpatterns = [
                   path('admin/', admin.site.urls),

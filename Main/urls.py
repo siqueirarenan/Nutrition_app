@@ -33,9 +33,14 @@ urlpatterns = [
     path('dashboard/recipes', views.recipes, name="recipes"),
 
 
+    #ADMIN
+    path('surveyresults/<str:people_group>', views.surveyresults, name='surveyresults'),
+
     #TASKS
     path('task/text/<int:text_task_id>', views.text_task, name="text_task"),
-    #path('task/challenge', views.challenge_task, name="ChallengeTask"),
+    path('task/challenge/<int:challenge_task_id>', views.challenge_task, name="challenge_task"),
+    path('task/multiple_choice_survey/<int:multiple_choice_task_id>',
+         views.multiple_choice_survey, name="multiple_choice_survey_task"),
 
 
 ]

@@ -1,0 +1,41 @@
+{% extends  'Main/base.html' %}
+
+{% block main %}
+<div class="w3-content w3-wide" style="max-width:1600px;" id="home">
+    <form method="POST">
+        {% csrf_token %}
+        <h1>
+            {{ task.question }}
+        </h1>
+
+        {% if not task.is_complete %}
+
+            {% if task.multiple_choices_allowed %}
+
+                {% for choice in choices %}
+
+                    <input class="w3-check" type="checkbox" name="{{choice}}" value="{{choice}}">
+                    <label>{{choice}}</label>
+
+                {% endfor %}
+
+            {% else %}
+
+                {% for choice in choices %}
+
+                    <input class="w3-radio" type="radio" name="choices" value="{{choice}}">
+                    <label>{{choice}}</label>
+
+                {% endfor %}
+
+            {% endif %}
+
+        <button type="submit" class="w3-button">Enviar</button>
+
+        {% endif %}
+
+        <h3>{{msg}}</h3>
+
+    </form>
+</div>
+{% endblock %}
