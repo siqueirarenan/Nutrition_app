@@ -1,0 +1,28 @@
+{% extends  'Main/base.html' %}
+
+{% block main %}
+<div class="w3-content w3-wide" style="max-width:1600px;" id="home">
+    <form method="POST">
+        {% csrf_token %}
+        <h1>
+            {{ title }}
+        </h1>
+
+        {% for field in fields %}
+
+            <label>{{field}}</label>
+            <input class="w3-input" name="{{field}}" type="number" step="0.01">
+
+        {% endfor %}
+
+        <button type="submit" class="w3-button">Calcular</button>
+
+        {% if calc_done %}
+            <h3>
+                {{result_sentence}}
+            </h3>
+        {% endif %}
+
+    </form>
+</div>
+{% endblock %}

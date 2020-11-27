@@ -41,6 +41,7 @@ urlpatterns = [
     path('task/challenge/<int:challenge_task_id>', views.challenge_task, name="challenge_task"),
     path('task/multiple_choice_survey/<int:multiple_choice_task_id>',
          views.multiple_choice_survey, name="multiple_choice_survey_task"),
+    path('task/calculation/<int:calculation_task_id>', views.calculation_task, name="calculation_task"),
 
 
 ]

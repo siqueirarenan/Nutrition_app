@@ -9,5 +9,20 @@
         {{ task.text | safe }}
     </h3>
 
+    {% if not is_complete %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="w3-button" style="background-color:#33ff33">Concluído</button>
+    </form>
+
+    {% else %}
+
+    <h3>
+        Concluído
+    </h3>
+
+    {% endif %}
+
 </div>
 {% endblock %}

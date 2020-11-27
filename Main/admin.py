@@ -4,7 +4,7 @@ from django.contrib.admin import AdminSite
 from .models import *
 
 class PeopleGroupAdmin(admin.ModelAdmin):
-    list_display = ('name', 'date_begin','date_end','protocol')
+    list_display = ('name', 'date_begin','protocol','is_active','last_task_line')
 class FoodGroupAdmin(admin.ModelAdmin):
     list_display = ('number','description')
 class MeasurementAdmin(admin.ModelAdmin):
@@ -27,6 +27,10 @@ class ChallengeTaskAdmin(admin.ModelAdmin):
     list_display = ('id','title')
 class MultipleChoiceSurveyTaskAdmin(admin.ModelAdmin):
     list_display = ('question',)
+class WritingSurveyTaskAdmin(admin.ModelAdmin):
+    list_display = ('question',)
+class CalculationTaskAdmin(admin.ModelAdmin):
+    list_display = ('title',)
 
 admin.site.register(UserGroup, UserGroupAdmin)
 admin.site.register(PeopleGroup, PeopleGroupAdmin)
@@ -43,4 +47,6 @@ admin.site.register(ProtocolMeal, ProtocolMealAdmin)
 admin.site.register(TextTask, TextTaskAdmin)
 admin.site.register(ChallengeTask, ChallengeTaskAdmin)
 admin.site.register(MultipleChoiceSurveyTask, MultipleChoiceSurveyTaskAdmin)
+admin.site.register(WritingSurveyTask, WritingSurveyTaskAdmin)
+admin.site.register(CalculationTask, CalculationTaskAdmin)
 

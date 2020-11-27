@@ -11,14 +11,16 @@ class PeopleGroup(models.Model):
     date_end = models.DateField()
     protocol = models.IntegerField()
     is_active = models.BooleanField(default=True)
+    last_task_line = models.IntegerField(default=True)
     def __str__(self):
         return self.name
 
 class UserGroup(models.Model):
     user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
     group = models.ForeignKey("PeopleGroup", on_delete=models.SET_NULL, null=True)
-    recipes = models.ManyToManyField("Recipe",blank=True, editable=False)
-    food = models.ManyToManyField("FoodPortion",blank=True, editable=False)
+    recipes = models.ManyToManyField("Recipe", blank=True, editable=False)
+    food = models.ManyToManyField("FoodPortion", blank=True, editable=False)
+    completed_tasks = models.ManyToManyField("AllTasks", blank=True, default=None)
     def __str__(self):
         return self.user.username
 
@@ -72,7 +74,7 @@ class Recipe(models.Model):
 
 class AllTasks(models.Model):
     name = models.CharField(max_length=20, default="")
-    position = models.IntegerField(default=1)
+    line_position = models.IntegerField(default=1)
     font_awesome_icon = models.CharField(max_length=100, default="")
     background_color = models.CharField(max_length=20, default="")
     def __str__(self):
@@ -92,8 +94,14 @@ class ChallengeTask(AllTasks):
 class MultipleChoiceSurveyTask(AllTasks):
     task_type = 'multiple_choice_survey'
     question = models.CharField(max_length=1000)
-    choices = models.TextField(max_length=5000)
+    choices = models.TextField(max_length=5000, help_text="write the choices in different lines")
     multiple_choices_allowed = models.BooleanField()
+    def __str__(self):
+        return self.question
+
+class WritingSurveyTask(AllTasks):
+    task_type = 'writing_survey'
+    question = models.CharField(max_length=5000)
     def __str__(self):
         return self.question
 
@@ -104,3 +112,12 @@ class SurveyVote(models.Model):
     choice = models.CharField(max_length=5000)
     def __str__(self):
         return self.choice
+
+class CalculationTask(AllTasks):
+    task_type = 'calculation'
+    title = models.CharField(max_length=500, default="")
+    fields = models.TextField(max_length=1000, help_text="write the fields in different lines")
+    equations = models.TextField(max_length=1000, help_text="write the equations in different lines")
+    result_sentence = models.TextField(max_length=1000, help_text="write the sentence by using eq1, eq2, eq3... for the results of the equations.")
+    def __str__(self):
+        return self.title

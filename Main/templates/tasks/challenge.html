@@ -2,13 +2,28 @@
 
 {% block main %}
 <div class="w3-content w3-wide" style="max-width:1600px;" id="home">
+
+    {% if not is_complete %}
+
+        <h1>
+            {{ task.title }}
+        </h1>
+        <h3>
+            {{ task.text | safe }}
+        </h3>
+        <img src="{{ task.image.url }}"/>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="w3-button" style="background-color:#33ff33">Concluí o desafio com sucesso!</button>
+        </form>
+
+    {% else %}
+
     <h1>
-        {{ task.title }}
+        Parabéns!!!
     </h1>
-    <h3>
-        {{ task.text | safe }}
-    </h3>
-    <img src="{{ task.image.url }}"/>
+
+    {% endif %}
 
 </div>
 {% endblock %}

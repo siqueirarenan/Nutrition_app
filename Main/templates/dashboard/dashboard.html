@@ -20,7 +20,7 @@
                 <a href="/signout"><h3 class="w3-bar-item w3-button">Deletar conta</h3></a>
             </div>
         </div>
-        <h1 class="w3-xxlarge" style="width:75%">Bem-vindo, {{ user_data1.first_name }}!</h1>
+        <h1 class="w3-xxlarge" style="width:75%">Bem-vindo, {{ user.first_name }}!</h1>
         {% else %}
         <h1 class="w3-xxlarge">Bem-vindo!</h1>
         <a href="/registration"><h1 class="w3-xlarge">Cadastre-se aqui.</h1></a>
@@ -28,9 +28,9 @@
 
     </div>
 
-    <div class="w3-container w3-orange">
+    <div class="w3-container w3-yellow w3-round-large">
         {% if group %}
-        <h1 class="w3-xlarge">Grupo {{ group }} - em andamento há {{date_passed}} dias!</h1>
+        <h1 class="w3-xlarge">{{ group }} - em andamento há {{date_passed}} dias!</h1>
         {% else %}
         <h1 class="w3-xlarge">Você nao está em nenhum grupo</h1>
         {% endif %}
@@ -38,23 +38,37 @@
 
     <div style="padding-top:50px;">
 
-        {% for line in grouped_tasks %}
+        {% for line in grouped_tasks_values %}
 
-        <div style="text-align:center;display:block"> <!--linha-->
+        <div style="text-align:center;display:block"> <!-- linha -->
 
-            {% for task in line %}
+            {% for task in line.0 %}
 
             <!--item-->
-            <a href="/task/{{task.task_type}}/{{task.id}}">
+            <a href="/task/{{task.0.task_type}}/{{task.0.id}}" style="pointer-events:{{line.1.0}}">
             <div style="width:180px;height:200px;display: inline-block;margin:auto;vertical-align: top">
                 <div class="center" style="text-align:left;width:110px;height:110px">
                     <svg width="110" height="110">
-                        <circle cx="55" cy="55" r="50" stroke="grey" stroke-width="7" fill="{{ task.background_color }}" />
+                        {% if line.1.0 == 'none' %}    <!--Case where task is not active-->
+                        <circle cx="55" cy="55" r="45" stroke="#eeeeee" stroke-width="7" fill="lightgrey"/>
+                        {% else %}
+                        <circle cx="55" cy="55" r="45" stroke="{{task.1}}" stroke-width="9" fill="{{ task.0.background_color }}"/>
+                        {% endif %}
                     </svg>
-                    <i class="{{ task.font_awesome_icon }}" style="font-size:60px;color:#031C52F3;position:relative;top:-87px;right:-38px"></i>
+                    <div class="center" style="text-align:center">
+                        {% if line.1.0 == 'none' %}      <!--Case where task is not active-->
+                        <i class="{{ task.0.font_awesome_icon }}" style="font-size:60px;color:#aaaaaa !important;
+                                                                       position:relative;
+                                                                       top:-90px;right:calc(-3px)"></i>
+                        {% else %}
+                        <i class="{{ task.0.font_awesome_icon }}" style="font-size:60px;color:#031C52F3 !important;
+                                                                       position:relative;
+                                                                       top:-90px;right:calc(-3px)"></i>
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="center" style="width:180px;height:50px;">
-                    <h3 style="text-align:center">{{ task.name }}</h3>
+                    <h3 style="text-align:center">{{ task.0.name }}</h3>
                 </div>
             </div>
             </a>
