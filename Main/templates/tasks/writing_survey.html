@@ -1,0 +1,32 @@
+{% extends  'tasks/base.html' %}
+
+{% block task %}
+<div class="w3-content w3-wide" style="max-width:1600px;" id="home">
+    <form method="POST">
+        {% csrf_token %}
+        <h1>
+            {{ task.question }}
+        </h1>
+
+        {% if not is_complete %}
+
+        <textarea class="w3-input w3-border" style="resize:none" rows="3"
+                  name="answer" maxlength="5000"></textarea>
+
+        <div class="w3-container">
+            <button type="submit" class="w3-button w3-round-large w3-mobile w3-padding-8"
+                    style="background-color:#031C52;min-width:350px;margin-top:15px">
+                <h3 style="color:white">Enviar</h3>
+            </button>
+        </div>
+        {% else %}
+
+        <div class="w3-container w3-border w3-round">
+            <h3> Enquete respondida.</h3>
+        </div>
+
+        {% endif %}
+
+    </form>
+</div>
+{% endblock %}

@@ -16,16 +16,10 @@ urlpatterns = [
     path('password-reset/', auth_views.PasswordResetView.as_view(
         template_name="registration/passwordResetForm.html",
         subject_template_name='registration/passwordResetSubject.txt',
-        email_template_name = 'accounts/registration/passwordResetEmail.html'),
+        email_template_name = 'registration/passwordResetEmail.html'),
          name='password_reset'),
     #moved to main url.py because the app still uses the default email for reset, which doest have "Main:"
     #path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(
-        template_name="registration/passwordResetDone.html"),
-         name='password_reset_done'),
-    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(
-        template_name="registration/passwordResetComplete.html"),
-         name='password_reset_complete'),
     path('signout/', views.signout, name='signout'),
     path('signout/done', views.signout_done, name='signout_done'),
 
@@ -41,6 +35,7 @@ urlpatterns = [
     path('task/challenge/<int:challenge_task_id>', views.challenge_task, name="challenge_task"),
     path('task/multiple_choice_survey/<int:multiple_choice_task_id>',
          views.multiple_choice_survey, name="multiple_choice_survey_task"),
+    path('task/writing_survey/<int:writing_survey_id>', views.writing_survey_task, name="writing_survey_task"),
     path('task/calculation/<int:calculation_task_id>', views.calculation_task, name="calculation_task"),
 
 

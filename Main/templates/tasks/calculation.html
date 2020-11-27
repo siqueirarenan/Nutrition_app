@@ -1,7 +1,6 @@
-{% extends  'Main/base.html' %}
+{% extends  'tasks/base.html' %}
 
-{% block main %}
-<div class="w3-content w3-wide" style="max-width:1600px;" id="home">
+{% block task %}
     <form method="POST">
         {% csrf_token %}
         <h1>
@@ -9,13 +8,18 @@
         </h1>
 
         {% for field in fields %}
-
+        <div class="w3-container">
             <label>{{field}}</label>
             <input class="w3-input" name="{{field}}" type="number" step="0.01">
-
+        </div>
         {% endfor %}
 
-        <button type="submit" class="w3-button">Calcular</button>
+        <div class="w3-container">
+            <button type="submit" class="w3-button w3-round-large w3-mobile w3-text-white w3-padding-16"
+                    style="background-color:#031C52;min-width:300px;margin-top:15px">
+                <h3 style="color:white">Calcular</h3>
+            </button>
+        </div>
 
         {% if calc_done %}
             <h3>
@@ -24,5 +28,4 @@
         {% endif %}
 
     </form>
-</div>
 {% endblock %}

@@ -1,0 +1,20 @@
+{% extends  'dashboard/base.html' %}
+
+{% block main %}
+<div class="w3-content w3-wide" style="max-width:1600px;" id="home">
+    <a href="/dashboard">
+        <div class="w3-container" style="right:0px">
+            <button class="w3-button" id="back_buttom" style="margin-top:8px;background-color:#FFFFFF">
+                <i class="fas fa-chevron-left" id="back_symbol" style="font-size:30px;color:#031C52;
+                        text-shadow: 2px 2px yellow"></i>
+                <h3 id="back" style="display:inline;padding-left:5px">Voltar</h3>
+            </button>
+        </div>
+    </a>
+    <div class="w3-container">
+    {% block task %}
+    {% endblock %}
+    </div>
+
+</div>
+{% endblock %}

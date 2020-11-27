@@ -39,7 +39,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) #for hero
 
 # SECURITY WARNING: keep the secret key used in production secret!
 f = open(os.path.join(BASE_DIR,"nutrition_app/key.txt"),'r')
-key = f.readline()
+key = f.readlines()
 f.close()
 SECRET_KEY = key[0]
 
@@ -187,13 +187,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') #for Heroku
 django_heroku.settings(locals())
 
 #Email
-#DEFAULT_FROM_EMAIL = 'mailgun@sandboxd8e1b4aae4974cb8a880131dee352f01.mailgun.org'
-#SERVER_EMAIL = 'mailgun@sandboxd8e1b4aae4974cb8a880131dee352f01.mailgun.org'
-#EMAIL_HOST = 'smtp.mailgun.org'
-#EMAIL_PORT = 587
-#EMAIL_HOST_USER = 'postmaster@sandboxd8e1b4aae4974cb8a880131dee352f01.mailgun.org'
-#EMAIL_HOST_PASSWORD = key[1]
-#EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = 'Admin - Marcela Siqueira <acessoria.marcelasiqueira@gmail.com>'
+#SERVER_EMAIL = 'acessoria.marcelasiqueira@gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'acessoria.marcelasiqueira@gmail.com'
+EMAIL_HOST_PASSWORD = key[1]
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 LOGGING = {
     'version': 1,

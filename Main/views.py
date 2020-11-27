@@ -6,6 +6,7 @@ from itertools import chain
 from allauth.socialaccount.models import SocialLogin
 from allauth.socialaccount.views import SignupView
 from django.core.exceptions import MultipleObjectsReturned
+from django.core.mail import send_mail
 from django.db.models import Count
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
@@ -218,6 +219,27 @@ def multiple_choice_survey(request,multiple_choice_task_id):
                'is_complete': is_complete}
     return render(request, 'tasks/multiple_choice.html', context)
 
+def writing_survey_task(request,writing_survey_id):
+    task = WritingSurveyTask.objects.get(id=writing_survey_id)
+    task_all = AllTasks.objects.get(id=writing_survey_id)
+    user = User.objects.get(username=request.user)
+    user_group = UserGroup.objects.get(user=user)
+    people_group = str(user_group.group)
+    is_complete = False
+    if task_all in user_group.completed_tasks.all():
+        is_complete = True
+    elif request.method == 'POST':
+        SurveyVote(question=str(task),
+                   people_group=people_group,
+                   user=user,
+                   choice=request.POST['answer']).save()
+        user_group.completed_tasks.add(task)
+        is_complete = True
+        user.save()
+    context = {'task': task,
+               'is_complete': is_complete}
+    return render(request, 'tasks/writing_survey.html', context)
+
 def calculation_task(request,calculation_task_id):
     task = CalculationTask.objects.get(id=calculation_task_id)
     result_sentence = task.result_sentence
@@ -246,8 +268,13 @@ def calculation_task(request,calculation_task_id):
                'calc_done': calc_done}
     return render(request, 'tasks/calculation.html', context)
 
-
-
+    # send_mail(
+    #     'Subject here',
+    #     'Here is the message.',
+    #     'acessoria.marcelasiqueira@gmail.com',
+    #     ['renansiqueira@gmail.com'],
+    #     fail_silently=False,
+    # )
 
 def surveyresults(request, people_group):
     user = User.objects.get(username=request.user)
@@ -264,6 +291,12 @@ def surveyresults(request, people_group):
             results[survey.question] = {}
             for a in answers:
                 results[survey.question][str(a)] = a.choice__count
+        surveys2 = WritingSurveyTask.objects.all()
+        for survey in surveys2:
+            question_votes = group_votes.filter(question=survey.question)
+            results[survey.question] = []
+            for a in question_votes:
+                results[survey.question] += [a.choice]  #here 'choice' means the answer
 
         return HttpResponse(json.dumps(results, indent=4, sort_keys=True), content_type="application/json")
     else:

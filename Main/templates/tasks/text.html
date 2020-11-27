@@ -1,6 +1,6 @@
-{% extends  'Main/base.html' %}
+{% extends  'tasks/base.html' %}
 
-{% block main %}
+{% block task %}
 <div class="w3-content w3-wide" style="max-width:1600px;" id="home">
     <h1>
         {{ task.title }}
@@ -13,14 +13,19 @@
 
     <form method="POST">
         {% csrf_token %}
-        <button type="submit" class="w3-button" style="background-color:#33ff33">Concluído</button>
+        <div class="w3-container">
+            <button type="submit" class="w3-button w3-round-large w3-mobile w3-padding-8"
+                    style="background-color:#031C52;min-width:350px;margin-top:15px">
+                <h3 style="color:white">Concluído</h3>
+            </button>
+        </div>
     </form>
 
     {% else %}
 
-    <h3>
-        Concluído
-    </h3>
+    <div class="w3-container w3-border w3-round">
+        <h3>  Texto lido </h3>
+    </div>
 
     {% endif %}
 

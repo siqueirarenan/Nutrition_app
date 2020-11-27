@@ -19,8 +19,15 @@ urlpatterns = [
                   path('', include('Main.urls')),
                   path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(
                       template_name="registration/passwordResetConfirm.html",
-                      post_reset_login=True),
+                      post_reset_login=True,
+                      post_reset_login_backend='django.contrib.auth.backends.ModelBackend'),
                        name='password_reset_confirm'), #Included here because the app uses defaul email for reset
+                  path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(
+                      template_name="registration/passwordResetDone.html"),
+                       name='password_reset_done'),
+                  path('reset/done/', auth_views.PasswordResetCompleteView.as_view(
+                      template_name="registration/passwordResetComplete.html"),
+                       name='password_reset_complete'),
 
                   path("accounts/inactive/", allauth_views2.AccountInactiveView.as_view(template_name="socialaccount/inactive.html"),
                        name="account_inactive"),

@@ -1,6 +1,6 @@
-{% extends  'Main/base.html' %}
+{% extends  'tasks/base.html' %}
 
-{% block main %}
+{% block task %}
 <div class="w3-content w3-wide" style="max-width:1600px;" id="home">
     <form method="POST">
         {% csrf_token %}
@@ -13,24 +13,30 @@
             {% if task.multiple_choices_allowed %}
 
                 {% for choice in choices %}
-
+                <div class="w3-container" style="padding-top:8px;padding-bottom:8px">
                     <input class="w3-check" type="checkbox" name="{{choice}}" value="{{choice}}">
-                    <label>{{choice}}</label>
-
+                    <label><h3 style="display:inline">{{choice}}</h3></label>
+                </div>
                 {% endfor %}
 
             {% else %}
 
                 {% for choice in choices %}
-
-                    <input class="w3-radio" type="radio" name="choices" value="{{choice}}">
-                    <label>{{choice}}</label>
-
+                <div class="w3-container" style="padding-top:8px;padding-bottom:8px">
+                        <input class="w3-radio" type="radio" name="choices" value="{{choice}}">
+                        <label><h3 style="display:inline">{{choice}}</h3></label>
+                    </div>
                 {% endfor %}
 
             {% endif %}
 
-        <button type="submit" class="w3-button">Enviar</button>
+        <div class="w3-container">
+            <button type="submit" class="w3-button w3-round-large w3-mobile w3-padding-8"
+                    style="background-color:#031C52;min-width:350px;margin-top:15px">
+                <h3 style="color:white">Enviar</h3>
+            </button>
+        </div>
+
         {% else %}
 
             <h3>Enquete respondida.</h3>
