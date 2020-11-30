@@ -1,0 +1,152 @@
+{% extends  'dashboard/base.html' %}
+
+{% block main %}
+<div class="w3-content w3-wide" style="max-width:1600px;" id="home">
+
+    <div class="w3-container w3-padding">
+        <h1 class="">Protocolo</h1>
+    </div>
+
+    {% for pm in protocol_meals %}
+
+        <div class="w3-card4 w3-row w3-block w3-button
+        w3-round w3-leftbar w3-rightbar w3-border w3-border-amber"
+             style="height:70px;background-color:#ffd480;margin-top:5px" onclick="accordion('{{ pm.meal }}')">
+            <div class="w3-col"  style="height:70px;width:100%;">
+                <h2 style="margin-top:4px">{{ pm.meal }}</h2>
+            </div>
+        </div>
+
+        <div id="{{ pm.meal }}" class="w3-hide">
+            <div class="w3-container w3-center" style="padding-top: 12px;padding-bottom: 12px;
+                 background-color:#ffeecc !important">
+                <h3 id="pmdescription{{ pm.meal }}">{{ pm.description | safe }}</h3>
+            </div>
+            <div class="w3-cell-row">
+<!--                {% for group in pm.food_groups.all %}
+                    <div class=" w3-button w3-container w3-round w3-border
+                                w3-leftbar w3-rightbar w3-border-indigo"
+                         onclick="open_modal('{{ group.number }}')" style="background-color:#99b3ff;">
+                        <h3 style="margin:0px">Grupo {{ group.number }}</h3>
+                    </div>
+                {% endfor %}-->
+            </div>
+            <div class="w3-container w3-sand w3-center" style="padding-top: 12px;padding-bottom: 12px;">
+
+                <h4 style="text-align:left"> Sugestões </h4>
+                <h3>{{ pm.suggestions | safe }} <h3>
+<!--                    <h4 style="text-align:left"> Receitas </h4>-->
+                    <h3>
+                    {% for r in pm.recipes.all %}
+
+                    <a href="/dashboard/recipes/{{ r.name }}#{{ r.name }}">
+                        <div class="w3-card4 w3-button w3-cell
+                            w3-round w3-leftbar w3-rightbar w3-border w3-border-amber"
+                             style="padding-top:0px;padding-bottom:0px;background-color:#ffff99"
+                             onclick="accordion('{{ pm.meal }}')">
+                                    {{ r.name }}
+                        </div>
+                    </a>
+                    {% endfor %}
+
+                    </h3>
+            </div>
+        </div>
+
+    {% endfor %}
+
+    <div class="">
+        <div  class="w3-card4 w3-container w3-row w3-block w3-border-amber"
+              style="margin-top:40px">
+                <h1 style="">Todos os grupos de alimentos</h1>
+        </div>
+        <div id="food_groups" >
+
+            {% for fg in food_groups %}
+
+            <div class="w3-card4 w3-block w3-button
+                    w3-round w3-leftbar w3-rightbar w3-border w3-border-indigo"
+                 style="background-color:#99b3ff;margin-top:5px;padding-bottom:0px;padding-top:8px"
+                 onclick="open_modal('{{ fg.number }}')">
+                    <h2 style="margin-top:4px;text-align:center">
+                        Grupo {{ fg.number }} - {{ fg.description }}
+                    </h2>
+            </div>
+            </button>
+
+            <!-- The Modal -->
+            <div id="{{ fg.number }}" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span onclick="close_modal('{{ fg.number }}')" class="close">&times;</span>
+                    <h2>{{ fg.description }}</h2>
+
+                    <table style="width:100%">
+
+                        {% for portion in fg.food_portions.all %}
+
+                        <tr style="border-bottom:1px solid grey;border-collapse: collapse;">
+
+                            <th style="width:50px">
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" id="{{ portion.name }}r" name="{{ portion.name }}" value="
+                                                   {% if portion in favourite_food %}1{%else%}0{%endif%}">
+                                    <button class="w3-col w3-border-0" onclick="favourite('{{ portion.name }}')"
+                                            style="height:50px;width:50px;display:inline;
+                                            background-color:transparent;margin-top:-10px;outline:none;" >
+                                        <i class='{% if portion in favourite_food %}
+                                    fas fa-heart{%else%}far fa-heart{%endif%}' id="{{ portion.name }}h"
+                                           style='font-size:30px;margin-top:0px;color:#031C52 !important'></i>
+                                    </button>
+                                </form>
+                            </th>
+
+                            <th  style="border-bottom:1px solid grey;border-collapse: collapse;">
+                                <h4 style="text-align:left">{{ portion.name }}</h4>
+                            </th>
+
+                            {% if portion.quantity %}
+
+                            <th  style="border-bottom:1px solid grey;border-collapse: collapse;">
+                                <h4 style="text-align:right">{{ portion.quantity }} {{portion.measurement}}</h4>
+                            </th>
+                            {% endif %}
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <script>
+        open_modal('{{fg_open}}')
+
+        {% for pm in protocol_meals %}
+
+            var text = document.getElementById("pmdescription{{ pm.meal }}").innerHTML
+            var list = text.match(/[Gg]rupo [0-9]/g)
+            console.log(list)
+            if (list != null) {
+                for (r of list) {
+                    text = text.replace(r,"<div class='w3-button w3-container w3-round w3-border w3-leftbar w3-rightbar w3-border-indigo' onclick=\"open_modal(\'".concat(r.charAt(r.length-1)).concat("\')\" style='background-color:#ccddff;padding-left:8px;padding-right:8px;margin-bottom: 10px'>").concat(r).concat("</div>"))
+                    console.log(text)
+                    }
+            }
+            document.getElementById("pmdescription{{ pm.meal }}").innerHTML = text
+
+        {% endfor %}
+    </script>
+
+</div>
+{% endblock %}

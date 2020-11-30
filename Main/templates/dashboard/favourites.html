@@ -1,0 +1,83 @@
+{% extends  'dashboard/base.html' %}
+
+{% block main %}
+<div class="w3-content w3-wide" style="max-width:1600px;" id="home">
+
+    <div class="w3-container w3-padding">
+        <h1 class="">Favoritos</h1>
+    </div>
+
+    <h2 class="">Receitas</h2>
+
+    {% for r in favourite_recipes %}
+    <div  class="w3-card4 w3-row w3-block w3-hover-yellow w3-button w3-yellow w3-round w3-leftbar w3-rightbar w3-border w3-border-amber"
+    style="height:70px;margin-top:5px;">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" id="{{ r.name }}r" name="{{ r.name }}" value="1">
+            <button class="w3-col w3-border-0" onclick="favourite('{{ r.name }}')" style="height:70px;width:70px;display:inline;
+            background-color:transparent;margin-top:-10px;outline:none;}" >
+                <i class='fas fa-heart' id="{{ r.name }}h" style='font-size:48px;margin-top:0px;color:orange'></i>
+            </button>
+
+        </form>
+        <div class="w3-col" onclick="accordion('{{ r.name }}')" style="height:70px;width:calc(100% - 80px);">
+            <h2 style="margin-top:4px">{{ r.name }}</h2>
+        </div>
+    </div>
+    <div id="{{ r.name }}" class="w3-hide">
+        <div class="w3-container w3-sand">
+            <h3>Ingredientes:</h3>
+            <h4>{% for line in r.ingredients.splitlines %}
+                    {{ line }} <br>
+                {% endfor %}
+            </h4>
+        </div>
+        <div class="w3-container w3-white">
+            <h3>Preparo:</h3>
+            <h4>{% for line in r.description.splitlines %}
+                {{ line }} <br>
+                {% endfor %}
+            </h4>
+        </div>
+    </div>
+    {% endfor %}
+
+    <h2 class="">Porções</h2>
+
+    <table style="width:100%">
+
+        {% for f in favourite_food %}
+
+        <tr style="border-bottom:1px solid grey;border-collapse: collapse;">
+
+            <th style="width:50px">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" id="{{ f.name }}r" name="{{ f.name }}" value="1">
+                    <button class="w3-col w3-border-0" onclick="favourite('{{ f.name }}')"
+                            style="height:50px;width:50px;display:inline;
+                                        background-color:transparent;margin-top:-10px;outline:none;" >
+                        <i class='fas fa-heart' id="{{ f.name }}h"
+                           style='font-size:30px;margin-top:0px;color:#031C52 !important'></i>
+                    </button>
+                </form>
+            </th>
+            <th  style="border-bottom:1px solid grey;border-collapse: collapse;">
+                <h4 style="text-align:left">{{ f.name }}</h4>
+            </th>
+
+            <th  style="border-bottom:1px solid grey;border-collapse: collapse;">
+            {% if f.quantity %}
+                <h4 style="text-align:right">{{ f.quantity }} {{f.measurement}}</h4>
+            {% endif %}
+            </th>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+{% endblock %}

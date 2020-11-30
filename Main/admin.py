@@ -10,13 +10,13 @@ class FoodGroupAdmin(admin.ModelAdmin):
 class MeasurementAdmin(admin.ModelAdmin):
     list_display = ('name','short_name')
 class FoodPortionAdmin(admin.ModelAdmin):
-    list_display = ('name','quantity','measurement','food_group')
+    list_display = ('name','quantity','measurement')
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ('name',)
 class MealAdmin(admin.ModelAdmin):
     list_display = ('name',)
-class MealUnitAdmin(admin.ModelAdmin):
-    list_display = ('quantity','food_group')
+# class MealUnitAdmin(admin.ModelAdmin):
+#     list_display = ('quantity','food_group')
 class ProtocolMealAdmin(admin.ModelAdmin):
     list_display = ('protocol','meal','description')
 class UserGroupAdmin(admin.ModelAdmin):
@@ -40,8 +40,8 @@ admin.site.register(FoodPortion, FoodPortionAdmin)
 
 admin.site.register(Recipe, RecipeAdmin)
 admin.site.register(Meal, MealAdmin)
-admin.site.register(MealUnit, MealUnitAdmin)
-admin.site.register(MealOption)
+# admin.site.register(MealUnit, MealUnitAdmin)
+# admin.site.register(MealOption)
 admin.site.register(ProtocolMeal, ProtocolMealAdmin)
 
 admin.site.register(TextTask, TextTaskAdmin)

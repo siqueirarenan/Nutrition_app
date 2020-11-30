@@ -1,8 +1,11 @@
 psycopg2-binary
 dj-database-url
-djangoajax
+djangoajax~=3.2
 whitenoise
-djangorestframework
+djangorestframework~=3.12.2
 markdown
 Pillow
-requests
+requests~=2.22.0
+django-allauth~=0.43.0
+Django~=3.1.2
+psycopg2~=2.8.6

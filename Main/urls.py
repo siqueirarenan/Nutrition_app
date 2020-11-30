@@ -24,7 +24,9 @@ urlpatterns = [
     path('signout/done', views.signout_done, name='signout_done'),
 
 
-    path('dashboard/recipes', views.recipes, name="recipes"),
+    path('dashboard/recipes/<str:recip_open>', views.recipes, name="recipes"),
+    path('dashboard/protocol/<str:fg_open>', views.protocol, name="protocol"),
+    path('dashboard/favourites', views.favourites, name="favourites"),
 
 
     #ADMIN

@@ -53,7 +53,8 @@ def dashboard(request):
     all_tasks_sub = [item for sublist in list(chain([list(chain(t.objects.all())) for t in AllTasks.__subclasses__()])) for item in sublist]
     keys = []
     for task in all_tasks_sub:
-        keys += [task.line_position]
+        if task.line_position > 0:
+            keys += [task.line_position]
     grouped_tasks = {}
     for k in set(keys):
         if k <= last_line_active:
@@ -61,11 +62,12 @@ def dashboard(request):
         else:
             grouped_tasks[k] = [[], ['none']]   #Deactivate tasks lines that are not defined for the group
     for task_sub in all_tasks_sub:
-        grouped_tasks[task_sub.line_position][0] += [[]]
-        grouped_tasks[task_sub.line_position][0][-1] += [task_sub]
-        task_all_tasks = copy.copy(task_sub)
-        task_all_tasks.__class__ = AllTasks
-        grouped_tasks[task_sub.line_position][0][-1] += ['#33ff33' if task_all_tasks in completed_tasks else '#eeeeee']
+        if task_sub.line_position > 0:
+            grouped_tasks[task_sub.line_position][0] += [[]]
+            grouped_tasks[task_sub.line_position][0][-1] += [task_sub]
+            task_all_tasks = copy.copy(task_sub)
+            task_all_tasks.__class__ = AllTasks
+            grouped_tasks[task_sub.line_position][0][-1] += ['#33ff33' if task_all_tasks in completed_tasks else '#eeeeee']
 
     context = {'user_request': request.user,
                'user': user,
@@ -150,10 +152,76 @@ def signout_done(request):
     u.save()
     return render(request, 'registration/signout_done.html', {})
 
-def recipes(request):
-    recipe = Recipe.objects.all()
-    context = {'recipes': recipe}
-    return render(request, 'Main/recipes.html', context)
+def recipes(request,recip_open):
+    recipes = Recipe.objects.all()
+    user = User.objects.get(username=request.user)
+    user_group = UserGroup.objects.get(user=user)
+    favourite_recipes = user_group.recipes.all()
+    if request.method == 'POST':
+        new_fav = Recipe.objects.get(name=list(request.POST.keys())[1])
+        if list(request.POST.values())[1] == "1":
+            user_group.recipes.add(new_fav)
+        else:
+            user_group.recipes.remove(new_fav)
+        user_group.save()
+        return HttpResponse(status=204)
+    else:
+        context = {'recipes': recipes,
+                   'favourite_recipes': favourite_recipes,
+                   'recip_open': recip_open
+        }
+        return render(request, 'dashboard/recipes.html', context)
+
+def protocol(request,fg_open):
+    user = User.objects.get(username=request.user)
+    user_group = UserGroup.objects.get(user=user)
+    people_group = user_group.group  #Integer
+    group_protocol = people_group.protocol
+    favourite_food = user_group.food.all()
+    protocol_meals = ProtocolMeal.objects.filter(protocol=group_protocol).order_by('meal_order')
+    #Should have 5 meals objects
+    if request.method == 'POST':
+        new_fav = FoodPortion.objects.get(name=list(request.POST.keys())[1])
+        if list(request.POST.values())[1] == "1":
+             user_group.food.add(new_fav)
+             user_group.save()
+        else:
+             user_group.food.remove(new_fav)
+             user_group.save()
+        return HttpResponse(status=204)
+    else:
+        context = {'food_groups': FoodGroup.objects.all(),
+                   'favourite_food': favourite_food,
+                   'fg_open': fg_open,
+                   'protocol_meals': protocol_meals
+                   }
+        return render(request, 'dashboard/protocol.html', context)
+
+def favourites(request):
+    user = User.objects.get(username=request.user)
+    user_group = UserGroup.objects.get(user=user)
+    favourite_recipes = user_group.recipes.all()
+    favourite_food = user_group.food.all()
+    if request.method == 'POST':
+        try:
+            new_fav = Recipe.objects.get(name=list(request.POST.keys())[1])
+            if list(request.POST.values())[1] == "1":
+                user_group.recipes.add(new_fav)
+            else:
+                user_group.recipes.remove(new_fav)
+        except:
+            new_fav = FoodPortion.objects.get(name=list(request.POST.keys())[1])
+            if list(request.POST.values())[1] == "1":
+                user_group.food.add(new_fav)
+            else:
+                user_group.food.remove(new_fav)
+        user_group.save()
+        return HttpResponse(status=204)
+    else:
+        context = {'favourite_recipes': favourite_recipes,
+                   'favourite_food': favourite_food,
+                   }
+        return render(request, 'dashboard/favourites.html', context)
 
 
 """
@@ -287,10 +355,13 @@ def surveyresults(request, people_group):
         results = {}
         for survey in surveys:
             question_votes = group_votes.filter(question=survey.question)
-            answers = question_votes.annotate(Count('choice'))
+            #Count votes
             results[survey.question] = {}
-            for a in answers:
-                results[survey.question][str(a)] = a.choice__count
+            choices = survey.choices.splitlines()
+            for c in choices:
+                results[survey.question][str(c)] = 0
+            for v in question_votes:
+                results[survey.question][str(v.choice)] += 1
         surveys2 = WritingSurveyTask.objects.all()
         for survey in surveys2:
             question_votes = group_votes.filter(question=survey.question)

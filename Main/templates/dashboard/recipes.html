@@ -1,21 +1,28 @@
-{% extends  'Main/base.html' %}
+{% extends  'dashboard/base.html' %}
 
 {% block main %}
 <div class="w3-content w3-wide" style="max-width:1600px;" id="home">
-    <div class="w3-container  w3-top w3-padding w3-white">
-        <a href="/dashboard">
-            <h1 class="w3-large">Voltar</h1>
-        </a>
-    </div>
-    <div class="w3-container w3-padding w3-white"><h1 class="w3-large">.</h1></div>
-    <div class="w3-container w3-padding w3-green">
-        <h1 class="w3-xlarge">Receitas</h1>
+
+    <div class="w3-container w3-padding">
+        <h1 class="">Receitas</h1>
     </div>
     {% for r in recipes %}
-    <button class="w3-card4 w3-block w3-button w3-amber w3-padding"
-            onclick="accordion('{{ r.name }}')">
-        <h2>{{ r.name }}</h2>
-    </button>
+    <div  class="w3-card4 w3-row w3-block w3-hover-yellow w3-button w3-yellow w3-round w3-leftbar w3-rightbar w3-border w3-border-amber"
+    style="height:70px;margin-top:5px;">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" id="{{ r.name }}r" name="{{ r.name }}" value="
+            {% if r in favourite_recipes %}1{%else%}0{%endif%}">
+            <button class="w3-col w3-border-0" onclick="favourite('{{ r.name }}')" style="height:70px;width:70px;display:inline;
+            background-color:transparent;margin-top:-10px;outline:none;}" >
+                <i class='{% if r in favourite_recipes %}
+                fas fa-heart{%else%}far fa-heart{%endif%}' id="{{ r.name }}h" style='font-size:48px;margin-top:0px;color:orange'></i>
+            </button>
+        </form>
+        <div class="w3-col" onclick="accordion('{{ r.name }}')" style="height:70px;width:calc(100% - 80px);">
+            <h2 style="margin-top:4px">{{ r.name }}</h2>
+        </div>
+    </div>
     <div id="{{ r.name }}" class="w3-hide">
         <div class="w3-container w3-sand">
             <h3>Ingredientes:</h3>
@@ -33,15 +40,9 @@
         </div>
     </div>
     {% endfor %}
+
     <script>
-        function accordion(id) {
-          var x = document.getElementById(id);
-          if (x.className.indexOf("w3-show") == -1) {
-            x.className += " w3-show";
-          } else {
-            x.className = x.className.replace(" w3-show", "");
-          }
-        }
+        accordion("{{recip_open}}")
     </script>
 
 </div>

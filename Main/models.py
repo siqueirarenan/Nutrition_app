@@ -28,37 +28,54 @@ class FoodPortion(models.Model):
     name = models.CharField(max_length=100, default="")
     quantity = models.FloatField(blank=True, null=True,)
     measurement = models.ForeignKey("Measurement", on_delete=models.SET_NULL, null=True, blank=True, default=1)
-    food_group = models.ForeignKey("FoodGroup", on_delete=models.SET_NULL, null=True, default=1)
+    def __str__(self):
+        return str(self.name) + " " + str(self.quantity) + str(self.measurement)
 
 class FoodGroup(models.Model):
     number = models.IntegerField(primary_key=True, default=1)
     description = models.CharField(max_length=100, default="")
+    food_portions = models.ManyToManyField('FoodPortion')
     def __str__(self):
-        return str(self.number)
+        return "Food group " + str(self.number) + " - " + str(self.description)
 
 class Measurement(models.Model):
     name = models.CharField(primary_key=True, max_length=100)
     short_name = models.CharField(max_length=20, default="")
     def __str__(self):
-        return self.name
+        return self.short_name
 
 
 class ProtocolMeal(models.Model):
     protocol = models.IntegerField()
-    meal = models.ForeignKey("Meal", on_delete=models.CASCADE)
-    description = models.TextField(default="", blank=True,)
+    MEAL_CHOICES = [
+        ('Café-da-manhã', 'Café-da-manhã'),
+        ('Lanche da manhã', 'Lanche da manhã'),
+        ('Almoço', 'Almoço'),
+        ('Lanche da tarde', 'Lanche da tarde'),
+        ('Café da tarde', 'Café da tarde'),
+        ('Jantar', 'Jantar'),
+        ('Ceia', 'Ceia'),
+    ]
+    meal = models.CharField(max_length=20, choices=MEAL_CHOICES, default = 'Almoço')
+    meal_order = models.IntegerField(editable=False, default=1)
+    description = models.TextField(default="", blank=True, help_text="Every time you write 'group x' (group 1, group 2..), it will become a link")
     suggestions = models.TextField(default="", blank=True,)
-    meal_options = models.ManyToManyField("MealOption")
     recipes = models.ManyToManyField("Recipe")
 
-class MealOption(models.Model):
-    meal_units = models.ManyToManyField("MealUnit")
-
-class MealUnit(models.Model):
-    quantity = models.IntegerField()
-    food_group = models.ForeignKey("FoodGroup", on_delete=models.CASCADE)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.meal_order = self.MEAL_CHOICES.index((str(self.meal), str(self.meal)))
     def __str__(self):
-        return str(self.quantity) + " group " + str(self.food_group)
+        return "Protocol " + str(self.protocol) + " - " + str(self.meal)
+
+# class MealOption(models.Model):
+#     meal_units = models.ManyToManyField("MealUnit")
+#
+# class MealUnit(models.Model):
+#     quantity = models.IntegerField()
+#     food_group = models.ForeignKey("FoodGroup", on_delete=models.CASCADE)
+#     def __str__(self):
+#         return str(self.quantity) + " group " + str(self.food_group)
 
 class Meal(models.Model):
     name = models.CharField(primary_key=True, max_length=100)
@@ -69,12 +86,14 @@ class Recipe(models.Model):
     name = models.CharField(max_length=100, default="")
     ingredients = models.TextField(default="", blank=True,)
     description = models.TextField(default="", blank=True,)
+    def __str__(self):
+        return self.name
 
 # TASKS
 
 class AllTasks(models.Model):
     name = models.CharField(max_length=20, default="")
-    line_position = models.IntegerField(default=1)
+    line_position = models.IntegerField(default=1, blank=True, null=True)
     font_awesome_icon = models.CharField(max_length=100, default="")
     background_color = models.CharField(max_length=20, default="")
     def __str__(self):
@@ -98,6 +117,8 @@ class MultipleChoiceSurveyTask(AllTasks):
     multiple_choices_allowed = models.BooleanField()
     def __str__(self):
         return self.question
+    def delete(self): #Avoid deletion
+        pass
 
 class WritingSurveyTask(AllTasks):
     task_type = 'writing_survey'

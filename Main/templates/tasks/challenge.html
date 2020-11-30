@@ -24,14 +24,6 @@
             </div>
         </form>
 
-    {% else %}
-
-    <h1>
-        Parabéns!!!
-    </h1>
-
-    {% endif %}
-
     <script>
         document.body.style.backgroundColor = "black";
         document.getElementById("title").style.color = "#ffffff ";
@@ -40,6 +32,24 @@
         document.getElementById("back_symbol").style.color = "#ffffff";
         document.getElementById("back").style.color = "#ffffff";
     </script>
+
+    {% else %}
+
+    <h1 id="congratulations">
+        Parabéns!!!
+    </h1>
+
+    <script>
+        document.body.style.backgroundColor = "black";
+        document.getElementById("back_buttom").style.backgroundColor  = "black";
+        document.getElementById("back_symbol").style.color = "#ffffff";
+        document.getElementById("back").style.color = "#ffffff";
+        document.getElementById("congratulations").style.color = "#ffffff";
+    </script>
+
+    {% endif %}
+
+
 
 </div>
 {% endblock %}

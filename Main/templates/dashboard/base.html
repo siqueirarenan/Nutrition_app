@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href='https://fonts.googleapis.com/css?family=Bahnschrift' rel='stylesheet'>
-    <script src="https://kit.fontawesome.com/f6c0905689.js"></script>
+    <script src="{% static 'my_js.js'%}"></script>
 
     <script>
 
@@ -19,9 +19,9 @@
 <body style="height:100%">
 
 <!-- header -->
-<div class=" w3-card my-top w3-text-white" style="height:60px;background-color:#031C52 !important">
+<div class=" w3-card my-top w3-text-white" style="z-index: 2;height:60px;background-color:#031C52 !important">
     <div class="center" style="max-width: 1000px !important;">
-        <a href="">
+        <a href="/dashboard">
             <div class="w3-col l3 m3 s3"><div style="margin-left:40px;">
                 <div class="w3-cell w3-padding" style="">
                     <i class="fas fa-bolt" style="font-size:30px;color:yellow !important;
@@ -32,6 +32,7 @@
                 </div>
             </div></div>
         </a>
+        <a href="/dashboard/protocol/all">
         <div class="w3-col l3 m3 s3" style=""><div style="margin-left:20px;">
             <div class="w3-cell w3-padding">
                 <i class="	fas fa-book-open" style="font-size:30px;color:yellow !important;text-shadow: 2px 2px white"></i>
@@ -41,6 +42,7 @@
             </div></div>
         </div>
         </a>
+        <a href="/dashboard/recipes/all">
         <div class="w3-col l3 m3 s3" style=""><div style="margin-left:20px;">
             <div class="w3-cell w3-padding">
                 <i class="fas fa-apple-alt" style="font-size:30px;color:yellow !important;text-shadow: 2px 2px white"></i>
@@ -50,6 +52,7 @@
             </div></div>
         </div>
         </a>
+        <a href="/dashboard/favourites">
         <div class="w3-col l3 m3 s3" style=""><div style="margin-left:0px;">
             <div class="w3-cell w3-padding">
                 <i class="fas fa-heart" style="font-size:30px;color:yellow !important;text-shadow: 2px 2px white"></i>
@@ -89,7 +92,7 @@
            text-shadow: 2px 2px orange;"> RESET</h2>
     </div>-->
 </div>
-<div class="w3-rest w3 container w3-center">
+<div class="w3-rest w3-container w3-center">
     <h2 class="re-font w3-wide w3-hide-small" style="margin-block-start:4px;margin-block-end:4px;
            text-shadow: 2px 2px yellow;"> RESET </h2>
 </div>
@@ -99,10 +102,16 @@
 {% endblock %}
 </div>
 
+<div class="w3-rest w3-container w3-center" style="height:100px;width:100%">
+
+</div>
+
 <!-- Footer -->
 <!--<footer class="w3-right-align w3-block w3-orange w3-padding-16">
     <h6 class="w3-padding">Web app desenvolvido por <a href="https://renansiqueira.herokuapp.com">Renan Siqueira</a>.</h6>
 </footer>-->
+
+<script src="https://kit.fontawesome.com/f6c0905689.js"></script>
 
 </body>
 </html>
