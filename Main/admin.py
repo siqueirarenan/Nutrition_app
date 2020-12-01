@@ -1,5 +1,5 @@
-from django.contrib import admin
-from django.contrib.admin import AdminSite, sites
+from django.contrib import admin, sites
+from django.contrib.admin import AdminSite
 from .models import *
 from django.contrib.sites.models import Site
 
