@@ -1,7 +1,7 @@
 psycopg2-binary
 psycopg2
-gunicorn
-django_heroku
+gunicorn     #Necessary for Heroku
+django_heroku #Necessary for Heroku
 dj-database-url
 djangoajax~=3.2
 whitenoise
