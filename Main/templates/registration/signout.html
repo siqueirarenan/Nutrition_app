@@ -3,17 +3,15 @@
 {$ load url %}
 
 {% block main %}
-<div  class="w3-container w3-row w3-content w3-green w3-wide" style="max-width:1600px;padding-bottom:16px;height:100%">
-    <div class="w3-col l6 m12 s12 w3-padding">
-        <h1 class="w3-xxlarge">Deletar conta</h1>
-    </div>
-    <div class="w3-col l6 m12 s12 w3-padding">
-        <h3 class="">Que pena! Você tem certeza que deseja deletar sua conta?</h3>
+<div  class=" w3-center w3-content w3-wide" style="max-width:1600px;height:100%;;background-color:#031C52">
+    <div class="w3-padding"   style="max-width:600px;margin:auto">
+        <h1 class="w3-xxlarge w3-text-white">Deletar conta</h1>
+        <h3 class="w3-text-white">Que pena! Você tem certeza que deseja deletar sua conta?</h3>
         <a href="{% url 'Main:signout_done' %}">
-        <button  type="submit"  class="w3-button w3-block w3-padding-16  w3-red">Deletar conta</button>
+        <button  type="submit"  class="w3-button w3-block w3-padding-16  w3-red" style="margin-bottom:12px">Deletar conta</button>
         </a>
         <a href="{% url 'Main:dashboard' %}">
-            <button  type="submit"  class="w3-button w3-block w3-padding-16  w3-orange">Voltar</button>
+            <button  type="submit"  class="w3-button w3-block w3-padding-16  w3-yellow">Voltar</button>
         </a>
     </div>
 

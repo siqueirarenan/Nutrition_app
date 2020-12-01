@@ -7,6 +7,8 @@
         <h1 class="">Protocolo</h1>
     </div>
 
+    {% if protocol_meals %}
+
     {% for pm in protocol_meals %}
 
         <div class="w3-card4 w3-row w3-block w3-button
@@ -34,7 +36,7 @@
             <div class="w3-container w3-sand w3-center" style="padding-top: 12px;padding-bottom: 12px;">
 
                 <h4 style="text-align:left"> Sugestões </h4>
-                <h3>{{ pm.suggestions | safe }} <h3>
+                <h3>{{ pm.suggestions | safe }} </h3>
 <!--                    <h4 style="text-align:left"> Receitas </h4>-->
                     <h3>
                     {% for r in pm.recipes.all %}
@@ -55,12 +57,44 @@
 
     {% endfor %}
 
+    {% else %}
+    <!-- empty buttoms -->
+    <div class="w3-card4 w3-row w3-block w3-button w3-round w3-leftbar w3-rightbar w3-border w3-border-grey"
+         style="height:70px;background-color:#dddddd;margin-top:5px;"
+         onclick="accordion('{{ pm.meal }}')">
+        <div class="w3-col"  style="height:70px;width:100%;">
+            <h2 style="margin-top:4px;color:#aaaaaa !important">Café-da-manhã</h2>
+        </div>
+    </div>
+    <div class="w3-card4 w3-row w3-block w3-button w3-round w3-leftbar w3-rightbar w3-border w3-border-grey"
+         style="height:70px;background-color:#dddddd;margin-top:5px" onclick="accordion('{{ pm.meal }}')">
+        <div class="w3-col"  style="height:70px;width:100%;">
+            <h2 style="margin-top:4px;color:#aaaaaa !important">Almoço</h2>
+        </div>
+    </div>
+    <div class="w3-card4 w3-row w3-block w3-button w3-round w3-leftbar w3-rightbar w3-border w3-border-grey"
+         style="height:70px;background-color:#dddddd;margin-top:5px" onclick="accordion('{{ pm.meal }}')">
+        <div class="w3-col"  style="height:70px;width:100%;">
+            <h2 style="margin-top:4px;color:#aaaaaa !important">Lanche da tarde</h2>
+        </div>
+    </div>
+    <div class="w3-card4 w3-row w3-block w3-button w3-round w3-leftbar w3-rightbar w3-border w3-border-grey"
+         style="height:70px;background-color:#dddddd;margin-top:5px" onclick="accordion('{{ pm.meal }}')">
+        <div class="w3-col"  style="height:70px;width:100%;">
+            <h2 style="margin-top:4px;color:#aaaaaa !important">...</h2>
+        </div>
+    </div>
+
+    {% endif %}
+
     <div class="">
         <div  class="w3-card4 w3-container w3-row w3-block w3-border-amber"
               style="margin-top:40px">
-                <h1 style="">Todos os grupos de alimentos</h1>
+                <h1 style="">Grupos de alimentos</h1>
         </div>
         <div id="food_groups" >
+
+            {% if protocol_meals %}
 
             {% for fg in food_groups %}
 
@@ -72,7 +106,6 @@
                         Grupo {{ fg.number }} - {{ fg.description }}
                     </h2>
             </div>
-            </button>
 
             <!-- The Modal -->
             <div id="{{ fg.number }}" class="modal">
@@ -125,6 +158,30 @@
             </div>
 
             {% endfor %}
+
+            {% else %}
+            <!-- empty buttoms -->
+            <div class="w3-card4 w3-row w3-block w3-button w3-round w3-leftbar w3-rightbar w3-border w3-border-grey"
+                 style="height:70px;background-color:#dddddd;margin-top:5px;"
+                 onclick="accordion('{{ pm.meal }}')">
+                <div class="w3-col"  style="height:70px;width:100%;">
+                    <h2 style="margin-top:4px;color:#aaaaaa !important">Grupo 1 - baixa caloria</h2>
+                </div>
+            </div>
+            <div class="w3-card4 w3-row w3-block w3-button w3-round w3-leftbar w3-rightbar w3-border w3-border-grey"
+                 style="height:70px;background-color:#dddddd;margin-top:5px" onclick="accordion('{{ pm.meal }}')">
+                <div class="w3-col"  style="height:70px;width:100%;">
+                    <h2 style="margin-top:4px;color:#aaaaaa !important">Grupo 2 - Proteínas</h2>
+                </div>
+            </div>
+            <div class="w3-card4 w3-row w3-block w3-button w3-round w3-leftbar w3-rightbar w3-border w3-border-grey"
+                 style="height:70px;background-color:#dddddd;margin-top:5px" onclick="accordion('{{ pm.meal }}')">
+                <div class="w3-col"  style="height:70px;width:100%;">
+                    <h2 style="margin-top:4px;color:#aaaaaa !important">...</h2>
+                </div>
+            </div>
+
+            {% endif %}
 
         </div>
     </div>

@@ -6,7 +6,9 @@
     <div class="w3-container w3-padding">
         <h1 class="">Receitas</h1>
     </div>
+
     {% for r in recipes %}
+
     <div  class="w3-card4 w3-row w3-block w3-hover-yellow w3-button w3-yellow w3-round w3-leftbar w3-rightbar w3-border w3-border-amber"
     style="height:70px;margin-top:5px;">
         <form method="POST">
@@ -19,7 +21,8 @@
                 fas fa-heart{%else%}far fa-heart{%endif%}' id="{{ r.name }}h" style='font-size:48px;margin-top:0px;color:orange'></i>
             </button>
         </form>
-        <div class="w3-col" onclick="accordion('{{ r.name }}')" style="height:70px;width:calc(100% - 80px);">
+        <div class="w3-col" onclick="{% if favourite_recipes %}accordion('{{ r.name }}'){% endif %}"
+             style="height:70px;width:calc(100% - 80px);">
             <h2 style="margin-top:4px">{{ r.name }}</h2>
         </div>
     </div>
@@ -43,6 +46,18 @@
 
     <script>
         accordion("{{recip_open}}")
+
+        {% if not protocol_meals %}
+
+        var buttons = document.getElmentsbyType(button)
+
+       for (b of buttons) {
+           b.disabled = true
+       }
+
+       {% endif %}
+
+
     </script>
 
 </div>

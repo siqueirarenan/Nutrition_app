@@ -1,58 +1,73 @@
 {% extends  'Main/base.html' %}
 
+{% load socialaccount %}
+{% providers_media_js %}
+
 {% block main%}
-<div class="w3-container w3-row w3-content w3-green w3-wide" style="max-width:1600px" id="home">
-    <div class="w3-col l6 m12 s12 w3-padding">
-        <h1 class="w3-xxlarge">Registro</h1>
-    </div>
-    <form class="w3-col l6 m12 s12 w3-padding" style="" method="POST">
+<div class="w3-container w3-center w3-content w3-wide w3-text-white" style="max-width:1600px;height:800px;background-color:#031C52" id="home">
+    <div class="w3-padding" style="max-width:600px;margin:auto">
+        <h1 class="w3-xxlarge w3-text-white" style="margin-bottom:25px">Cadastre-se</h1>
+
+        <a href="{% provider_login_url 'google' %}">
+            <div class="google btn" style="margin-top:10px">
+                <i class="fa fa-google fa-fw" style="color:white"></i> Entrar com Google
+            </div>
+        </a>
+        <a href="{% provider_login_url 'facebook' method='oauth2' %}">
+            <div class="fb btn" style="margin-top:10px">
+                <i class="fa fa-facebook fa-fw" style="color:white"></i> Entrar com Facebook
+            </div>
+        </a>
+
+    <form class="w3-col l6 m12 s12 w3-padding" style="width:100%" method="POST">
         {% csrf_token %}
         <p>
-            <label class="w3-large">Nome de Usuário</label>
-            <input class="w3-input w3-border" type="text" name="username" required/>
+            <label class="w3-large w3-text-white">Nome de Usuário</label>
+            <input class="w3-input w3-border" type="text" name="username" value="{%if form.username.value%}{{form.username.value}}{%endif%}" required/>
         </p>
         {% for error in form.username.errors %}
             <p style="color: red">{{ error }}</p>
         {% endfor %}
         <p>
-            <label class="w3-large">Nome</label>
-            <input class="w3-input w3-border" type="text" name="first_name" required/>
+            <label class="w3-large w3-text-white">Nome</label>
+            <input class="w3-input w3-border" type="text" name="first_name"  value="{%if form.first_name.value%}{{form.first_name.value}}{%endif%}" required/>
         </p>
         {% for error in form.first_name.errors %}
         <p style="color: red">{{ error }}</p>
         {% endfor %}
         <p>
-            <label class="w3-large">Sobrenome</label>
-            <input class="w3-input w3-border" type="text" name="last_name" required/>
+            <label class="w3-large w3-text-white">Sobrenome</label>
+            <input class="w3-input w3-border" type="text" name="last_name" value="{%if form.last_name.value%}{{form.last_name.value}}{%endif%}"  required/>
         </p>
         {% for error in form.last_name.errors %}
         <p style="color: red">{{ error }}</p>
         {% endfor %}
         <p>
-            <label class="w3-large">E-mail</label>
-            <input class="w3-input w3-border" type="email" name="email" required/>
+            <label class="w3-large w3-text-white">E-mail</label>
+            <input class="w3-input w3-border" type="email" name="email" value="{%if form.email.value%}{{form.email.value}}{%endif%}"  required/>
         </p>
         {% for error in form.email.errors %}
         <p style="color: red">{{ error }}</p>
         {% endfor %}
         <p>
-            <label class="w3-large">Senha</label>
-            <input class="w3-input w3-border" type="password" name="password1" required
-                   onkeyup="check_password()" id="password1"/>
+            <label class="w3-large w3-text-white">Senha</label>
+            <input class="w3-input w3-border" type="password" name="password1"
+                   required onkeyup="check_password()" id="password1"/>
         </p>
         {% for error in form.password1.errors %}
         <p style="color: red">{{ error }}</p>
         {% endfor %}
         <p>
-            <label class="w3-large">Confirme a senha</label>
-            <input class="w3-input w3-border" type="password" name="password2" required
-                   onKeyup="check_password()" id="password2"/>
+            <label class="w3-large w3-text-white">Confirme a senha</label>
+            <input class="w3-input w3-border" type="password" name="password2"
+                   required onKeyup="check_password()" id="password2"/>
         </p>
         {% for error in form.password2.errors %}
         <p style="color: red">{{ error }}</p>
         {% endfor %}
 
-        <button type="submit" id="registration_submit" class="w3-button w3-padding-16 w3-block w3-orange">Registrar</button>
+        <button type="submit" id="registration_submit" class="w3-button w3-wide w3-padding-16 w3-block w3-yellow">Registrar</button>
     </form>
+    </div>
 </div>
 {% endblock %}

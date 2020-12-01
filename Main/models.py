@@ -77,11 +77,6 @@ class ProtocolMeal(models.Model):
 #     def __str__(self):
 #         return str(self.quantity) + " group " + str(self.food_group)
 
-class Meal(models.Model):
-    name = models.CharField(primary_key=True, max_length=100)
-    def __str__(self):
-        return self.name
-
 class Recipe(models.Model):
     name = models.CharField(max_length=100, default="")
     ingredients = models.TextField(default="", blank=True,)

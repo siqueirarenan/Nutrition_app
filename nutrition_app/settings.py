@@ -71,10 +71,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'Main',
 
-    'sslserver', #TODO: DEV ONLY
+   # 'sslserver', #TODO: DEV ONLY
 ]
 
-CRISPY_TEMPLATE_PACK =  'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -224,7 +224,7 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-SITE_ID = 4
+SITE_ID = 4 #TODO: in production, change to 5(?)
 LOGIN_REDIRECT_URL = '/dashboard'
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_PROVIDERS = {

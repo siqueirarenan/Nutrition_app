@@ -1,8 +1,41 @@
 from django.contrib import admin
 from django.contrib.admin import AdminSite
-
 from .models import *
 
+class MyAdminSite(AdminSite):
+    def get_app_list(self, request):
+        """
+        Return a sorted list of all the installed apps that have been
+        registered in this site.
+        """
+        ordering = {
+            "Usuários": 0,
+            "User groups": 1,
+            "People groups": 2,
+            "Text tasks": 3,
+            "Challenge tasks": 4,
+            "Writing survey tasks": 5,
+            "Multiple choice survey tasks": 6,
+            "Calculation tasks": 7,
+            "Recipes": 8,
+            "Protocol meals": 9,
+            "Food groups": 10,
+            "Food portions": 11,
+            "Measurements": 12
+        }
+        app_dict = self._build_app_dict(request)
+        # a.sort(key=lambda x: b.index(x[0]))
+        # Sort the apps alphabetically.
+        app_list = sorted(app_dict.values(), key=lambda x: x['name'].lower())
+
+        # Sort the models alphabetically within each app.
+        for app in app_list:
+            app['models'].sort(key=lambda x: ordering[x['name']])
+        return app_list
+admin_site = MyAdminSite(name='myadmin')
+
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('username', 'email','first_name','last_name','is_active','last_login')
 class PeopleGroupAdmin(admin.ModelAdmin):
     list_display = ('name', 'date_begin','protocol','is_active','last_task_line')
 class FoodGroupAdmin(admin.ModelAdmin):
@@ -12,8 +45,6 @@ class MeasurementAdmin(admin.ModelAdmin):
 class FoodPortionAdmin(admin.ModelAdmin):
     list_display = ('name','quantity','measurement')
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-class MealAdmin(admin.ModelAdmin):
     list_display = ('name',)
 # class MealUnitAdmin(admin.ModelAdmin):
 #     list_display = ('quantity','food_group')
@@ -32,21 +63,22 @@ class WritingSurveyTaskAdmin(admin.ModelAdmin):
 class CalculationTaskAdmin(admin.ModelAdmin):
     list_display = ('title',)
 
-admin.site.register(UserGroup, UserGroupAdmin)
-admin.site.register(PeopleGroup, PeopleGroupAdmin)
-admin.site.register(FoodGroup, FoodGroupAdmin)
-admin.site.register(Measurement, MeasurementAdmin)
-admin.site.register(FoodPortion, FoodPortionAdmin)
 
-admin.site.register(Recipe, RecipeAdmin)
-admin.site.register(Meal, MealAdmin)
+admin_site.register(User, UserAdmin)
+admin_site.register(UserGroup, UserGroupAdmin)
+admin_site.register(PeopleGroup, PeopleGroupAdmin)
+admin_site.register(FoodGroup, FoodGroupAdmin)
+admin_site.register(Measurement, MeasurementAdmin)
+admin_site.register(FoodPortion, FoodPortionAdmin)
+
+admin_site.register(Recipe, RecipeAdmin)
 # admin.site.register(MealUnit, MealUnitAdmin)
 # admin.site.register(MealOption)
-admin.site.register(ProtocolMeal, ProtocolMealAdmin)
+admin_site.register(ProtocolMeal, ProtocolMealAdmin)
 
-admin.site.register(TextTask, TextTaskAdmin)
-admin.site.register(ChallengeTask, ChallengeTaskAdmin)
-admin.site.register(MultipleChoiceSurveyTask, MultipleChoiceSurveyTaskAdmin)
-admin.site.register(WritingSurveyTask, WritingSurveyTaskAdmin)
-admin.site.register(CalculationTask, CalculationTaskAdmin)
+admin_site.register(TextTask, TextTaskAdmin)
+admin_site.register(ChallengeTask, ChallengeTaskAdmin)
+admin_site.register(MultipleChoiceSurveyTask, MultipleChoiceSurveyTaskAdmin)
+admin_site.register(WritingSurveyTask, WritingSurveyTaskAdmin)
+admin_site.register(CalculationTask, CalculationTaskAdmin)
 
