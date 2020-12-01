@@ -10,3 +10,4 @@ Pillow
 requests~=2.22.0
 django-allauth
 Django~=3.1.2
+django-crispy-forms
