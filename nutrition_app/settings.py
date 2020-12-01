@@ -223,7 +223,7 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-SITE_ID = 4 #TODO
+SITE_ID = 1 #TODO: site must be added to the database using ID=1!
 LOGIN_REDIRECT_URL = '/dashboard'
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_PROVIDERS = {
