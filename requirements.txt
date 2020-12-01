@@ -1,4 +1,6 @@
 psycopg2-binary
+psycopg2
+django_heroku
 dj-database-url
 djangoajax~=3.2
 whitenoise
@@ -6,6 +8,5 @@ djangorestframework~=3.12.2
 markdown
 Pillow
 requests~=2.22.0
-django-allauth~=0.43.0
+django-allauth
 Django~=3.1.2
-psycopg2~=2.8.6
