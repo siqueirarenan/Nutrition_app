@@ -223,7 +223,7 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-SITE_ID = 4 #TODO: in production, change to 5(?)
+SITE_ID = 5 #TODO: in production, change to 5(heroku?), in dev is 4
 LOGIN_REDIRECT_URL = '/dashboard'
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_PROVIDERS = {
@@ -249,5 +249,5 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True #TODO: in dev
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+#SECURE_SSL_REDIRECT = True #TODO: in dev
