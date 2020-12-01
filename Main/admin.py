@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin import AdminSite, sites
 from .models import *
-from django.contrib.sites.models import Sit
+from django.contrib.sites.models import Site
 
 class MyAdminSite(AdminSite):
     def get_app_list(self, request):
