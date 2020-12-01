@@ -23,7 +23,8 @@ class MyAdminSite(AdminSite):
             "Protocol meals": 9,
             "Food groups": 10,
             "Food portions": 11,
-            "Measurements": 12
+            "Measurements": 12,
+            "Sites": 99
         }
         app_dict = self._build_app_dict(request)
         # a.sort(key=lambda x: b.index(x[0]))
