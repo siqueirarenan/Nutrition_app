@@ -44,9 +44,8 @@ f.close()
 SECRET_KEY = key[0]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True     #TODO: DEV ONLY
-ALLOWED_HOSTS = ['*']
-#ALLOWED_HOSTS = ["localhost", "127.0.0.1",".herokuapp.com"]
+DEBUG = False     #TODO: DEV ONLY
+ALLOWED_HOSTS = ["localhost", "127.0.0.1",".herokuapp.com"]
 
 ADMINS = [('renansiqueira', 'renansiqueira@gmail.com')]
 
@@ -71,7 +70,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'Main',
 
-   # 'sslserver', #TODO: DEV ONLY
+    #'sslserver', #TODO: DEV ONLY
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -121,27 +120,27 @@ WSGI_APPLICATION = 'nutrition_app.wsgi.application'
 # python manage.py migrate
 # python manage.py createsuperuser
 
-# DATABASES = {
-#      'default': {
-#          'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#          'NAME': 'd70b90u9f6om4h',
-#          'USER': 'kpxrkzhcjvwaca',
-#          'PASSWORD': 'c8432332aaaf015c02045f817d923341c43b038035c6e57abe118a170a2fce59',
-#          'HOST': 'ec2-34-232-24-202.compute-1.amazonaws.com',
-#          'PORT': '5432',
-#      }
-#  }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'nutrition',
-        'USER': 'postgres',
-        'PASSWORD': 'raquoasi',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-}
+     'default': {
+         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+         'NAME': 'd70b90u9f6om4h',
+         'USER': 'kpxrkzhcjvwaca',
+         'PASSWORD': 'c8432332aaaf015c02045f817d923341c43b038035c6e57abe118a170a2fce59',
+         'HOST': 'ec2-34-232-24-202.compute-1.amazonaws.com',
+         'PORT': '5432',
+     }
+ }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'nutrition',
+#         'USER': 'postgres',
+#         'PASSWORD': '',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
@@ -250,5 +249,5 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-#SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True #TODO: in dev

@@ -1,0 +1,1 @@
+web: gunicorn nutrition_app.wsgi --log-file -
