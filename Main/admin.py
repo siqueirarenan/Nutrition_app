@@ -46,9 +46,9 @@ class MeasurementAdmin(admin.ModelAdmin):
     list_display = ('name','short_name')
 class FoodPortionAdmin(admin.ModelAdmin):
     list_display = ('name','quantity','measurement')
-class RecipeAdmin(SiteAdmin):
+class RecipeAdmin(admin.ModelAdmin):
     list_display = ('name',)
-class MySitesAdmin(admin.ModelAdmin):
+class MySitesAdmin(SiteAdmin):
      list_display = ('id','provider')
 class ProtocolMealAdmin(admin.ModelAdmin):
     list_display = ('protocol','meal','description')
