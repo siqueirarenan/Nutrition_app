@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin import AdminSite
 from .models import *
+from django.contrib.sites.models import Site
 
 class MyAdminSite(AdminSite):
     def get_app_list(self, request):
@@ -46,8 +47,8 @@ class FoodPortionAdmin(admin.ModelAdmin):
     list_display = ('name','quantity','measurement')
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ('name',)
-# class MealUnitAdmin(admin.ModelAdmin):
-#     list_display = ('quantity','food_group')
+class SitesAdmin(admin.ModelAdmin):
+     list_display = ('id','provider')
 class ProtocolMealAdmin(admin.ModelAdmin):
     list_display = ('protocol','meal','description')
 class UserGroupAdmin(admin.ModelAdmin):
@@ -63,6 +64,7 @@ class WritingSurveyTaskAdmin(admin.ModelAdmin):
 class CalculationTaskAdmin(admin.ModelAdmin):
     list_display = ('title',)
 
+admin.site.register(Site, SitesAdmin)
 
 admin_site.register(User, UserAdmin)
 admin_site.register(UserGroup, UserGroupAdmin)
