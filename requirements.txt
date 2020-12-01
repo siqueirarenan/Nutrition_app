@@ -1,5 +1,6 @@
 psycopg2-binary
 psycopg2
+gunicorn
 django_heroku
 dj-database-url
 djangoajax~=3.2
