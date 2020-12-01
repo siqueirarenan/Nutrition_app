@@ -49,7 +49,7 @@ class FoodPortionAdmin(admin.ModelAdmin):
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ('name',)
 class MySitesAdmin(SiteAdmin):
-     list_display = ('id','provider')
+     list_display = ('id','domain','name')
 class ProtocolMealAdmin(admin.ModelAdmin):
     list_display = ('protocol','meal','description')
 class UserGroupAdmin(admin.ModelAdmin):
@@ -65,7 +65,7 @@ class WritingSurveyTaskAdmin(admin.ModelAdmin):
 class CalculationTaskAdmin(admin.ModelAdmin):
     list_display = ('title',)
 
-admin.site.register(Site, MySitesAdmin)
+admin_site.register(Site, MySitesAdmin)
 
 admin_site.register(User, UserAdmin)
 admin_site.register(UserGroup, UserGroupAdmin)
