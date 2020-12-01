@@ -169,7 +169,7 @@ def recipes(request,recip_open):
         else:
             user_group.recipes.remove(new_fav)
         user_group.save()
-        return HttpResponse(status=200)
+        #return HttpResponse(status=200)
     else:
         print(favourite_recipes)
         context = {'recipes': recipes,
