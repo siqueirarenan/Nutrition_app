@@ -14,7 +14,10 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect, HttpResponse
 from rest_framework import permissions
+
+from Main.forms import SignUpForm
 from Main.serializers import *
+from django.db.models.signals import post_save
 
 
 def homepage(request,msg_sent_bool=0):
@@ -78,7 +81,7 @@ def dashboard(request):
 
 def registration(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
@@ -90,7 +93,7 @@ def registration(request):
             #TODO: Fill form with inputed data
             return render(request, 'registration/registration.html', {'form':form})
     else:
-        form = UserCreationForm()
+        form = SignUpForm()
         return render(request, 'registration/registration.html', {'form':form})
 
 def signin(request):
@@ -437,3 +440,14 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAdminUser]
+
+def sendEmail(**kwargs):
+    send_mail(
+        "Novo usuário cadastrado",
+        "Um novo usuário acabou de se cadastrar",
+        "acessoria.marcelasiqueira@gmail.com",
+        ['acessoria.marcelasiqueira@gmail.com'],
+        fail_silently=False,
+    )
+
+post_save.connect(receiver=sendEmail, sender=User, weak=False)
