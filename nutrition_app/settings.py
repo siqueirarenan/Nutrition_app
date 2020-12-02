@@ -47,6 +47,8 @@ SECRET_KEY = key[0]
 DEBUG = False     #TODO: DEV ONLY
 ALLOWED_HOSTS = ["localhost", "127.0.0.1",".herokuapp.com"]
 
+WHITENOISE_AUTOREFRESH = True
+
 ADMINS = [('renansiqueira', 'renansiqueira@gmail.com')]
 
 # Application definition
@@ -177,7 +179,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-WHITENOISE_AUTOREFRESH = True
 
 STATIC_URL = '/static/'   #Is what goes to the static tag in the HTML inside the app
 STATICFILES_DIRS = [
