@@ -14,16 +14,16 @@
         </div>
         {% endfor %}
 
-        <div class="w3-container">
+
             <button type="submit" class="w3-button w3-round-large w3-mobile w3-text-white w3-padding-16"
-                    style="background-color:#031C52;min-width:300px;margin-top:15px">
+                    style="background-color:#031C52;max-width:350px;min-width:280px;margin-top:15px">
                 <h3 style="color:white">Calcular</h3>
             </button>
-        </div>
+
 
         {% if calc_done %}
             <h3>
-                {{result_sentence}}
+                {{result_sentence | safe}}
             </h3>
         {% endif %}
 

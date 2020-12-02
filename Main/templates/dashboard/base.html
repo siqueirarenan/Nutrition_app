@@ -3,7 +3,7 @@
 <head>
     {% load static %}
     <meta charset="UTF-8">
-    <title>App de nutricao</title>
+    <title>RESET</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -20,56 +20,78 @@
 <body style="height:100%">
 
 <!-- header -->
-<div class=" w3-card my-top w3-text-white" style="z-index: 2;background-color:#031C52 !important">
+<div class=" w3-card my-top w3-text-white" style="z-index: 2;background-color:#031C52 !important;
+        border-top:4px solid yellow">
     <div class="center" style="max-width: 1000px !important;">
         <a href="/dashboard">
-            <div class="w3-col l3 m3 s3"><div style="margin-left:30px;">
-                <div class="w3-cell w3-padding" style="">
+            <div class="w3-col l3 m3 s3"><div style="margin-left:0px;text-align:center">
+                <h4 class="w3-cell w3-padding w3-hide-small" style="margin:auto !important">
                     <i class="fas fa-bolt" style="font-size:30px;color:yellow !important;
                     text-shadow: 2px 2px white"></i>
-                </div>
+                </h4>
                 <div class="w3-cell w3-hide-small"  style="padding-left:15px">
                     <h4 class="w3-wide" style="margin-top:0px; margin-left:5px;color:#FFFFFF !important"><b>INÍCIO</b></h4>
                 </div>
-                <h6 class="w3-hide-medium w3-hide-large" style="color:white;margin-top:0px">INÍCIO</h6>
+
+                <h4 class="w3-padding w3-hide-medium w3-hide-large" style="margin:auto">
+                    <i class="fas fa-bolt" style="font-size:30px;color:yellow !important;
+                    text-shadow: 2px 2px white"></i>
+                </h4>
+                <h6 class="w3-hide-medium w3-hide-large" style="color:white;margin-top:0px;
+                margin-left:0px">Início</h6>
             </div></div>
         </a>
         <a href="/dashboard/protocol/all">
-        <div class="w3-col l3 m3 s3" style=""><div style="margin-left:5px;">
-            <div class="w3-cell w3-padding">
-                <i class="	fas fa-book-open" style="font-size:30px;color:yellow !important;
-                text-shadow: 2px 2px white;margin-left:12px;"></i>
+        <div class="w3-col l3 m3 s3" style=""><div style="margin-left:0px;text-align:center">
+            <div class="w3-cell w3-padding w3-hide-small">
+                <i class="fas fa-book-open" style="font-size:30px;color:yellow !important;
+                text-shadow: 2px 2px white;margin-left:2px;"></i>
             </div>
             <div class="w3-cell w3-hide-small">
                 <h4 class="w3-wide" style="margin-top:0px; margin-left:5px;color:#FFFFFF !important"><b>PROTOCOLO</b></h4>
             </div>
-            <h6 class="w3-hide-medium w3-hide-large" style="color:white;margin-top:0px">PROTOCOLO </h6>
+
+            <h4 class="w3-padding w3-hide-medium w3-hide-large" style="margin:auto">
+                <i class="fas fa-book-open" style="font-size:30px;color:yellow !important;
+                    text-shadow: 2px 2px white"></i>
+            </h4>
+            <h6 class="w3-hide-medium w3-hide-large" style="color:white;margin-top:0px">Protocolo</h6>
         </div>
         </div>
         </a>
         <a href="/dashboard/recipes/all">
-        <div class="w3-col l3 m3 s3" style=""><div style="margin-left:20px;">
-            <div class="w3-cell w3-padding">
+        <div class="w3-col l3 m3 s3" style=""><div style="margin-left:10px;text-align:center">
+            <div class="w3-cell w3-padding w3-hide-small">
                 <i class="fas fa-apple-alt" style="font-size:30px;color:yellow !important;
                 text-shadow: 2px 2px white"></i>
             </div>
             <div class="w3-cell w3-hide-small" style="padding-left:15px">
                 <h4 class="w3-wide" style="margin-top:0px; margin-left:0px;color:#FFFFFF !important"><b>RECEITAS</b></h4>
             </div>
-            <h6 class="w3-hide-medium w3-hide-large" style="color:white;margin-top:0px">RECEITAS</h6>
+
+            <h4 class="w3-padding w3-hide-medium w3-hide-large" style="margin:auto">
+                <i class="fas fa-apple-alt" style="font-size:30px;color:yellow !important;
+                    text-shadow: 2px 2px white"></i>
+            </h4>
+            <h6 class="w3-hide-medium w3-hide-large" style="color:white;margin-top:0px">Receitas</h6>
         </div>
         </div>
         </a>
         <a href="/dashboard/favourites">
-        <div class="w3-col l3 m3 s3" style=""><div style="margin-left:4px;">
-            <div class="w3-cell w3-padding">
+        <div class="w3-col l3 m3 s3" style=""><div style="margin-left:4px;text-align:center">
+            <div class="w3-cell w3-padding w3-hide-small">
                 <i class="fas fa-heart" style="font-size:30px;color:yellow !important;
-                text-shadow: 2px 2px white;margin-left:8px"></i>
+                text-shadow: 2px 2px white;margin-left:0px"></i>
             </div>
             <div class="w3-cell w3-hide-small">
                 <h4 class="w3-wide" style="margin-top:0px; margin-left:5px;color:#FFFFFF !important"><b>FAVORITOS</b></h4>
             </div>
-            <h6 class="w3-hide-medium w3-hide-large" style="color:white;margin-top:0px">FAVORITOS</h6>
+
+            <h4 class="w3-padding w3-hide-medium w3-hide-large" style="margin:auto">
+                <i class="fas fa-heart" style="font-size:30px;color:yellow !important;
+                    text-shadow: 2px 2px white"></i>
+            </h4>
+            <h6 class="w3-hide-medium w3-hide-large" style="color:white;margin-top:0px">Favoritos</h6>
         </div>
         </div>
         </a>
