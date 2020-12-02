@@ -44,7 +44,7 @@ f.close()
 SECRET_KEY = key[0]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False     #TODO: DEV ONLY
+DEBUG = True     #TODO: DEV ONLY
 ALLOWED_HOSTS = ["localhost", "127.0.0.1",".herokuapp.com"]
 
 ADMINS = [('renansiqueira', 'renansiqueira@gmail.com')]
