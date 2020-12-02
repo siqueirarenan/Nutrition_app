@@ -45,8 +45,7 @@ SECRET_KEY = key[0]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True     #TODO: DEV ONLY
-ALLOWED_HOSTS = ['*']
-#ALLOWED_HOSTS = ["localhost", "127.0.0.1",".herokuapp.com"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1",".herokuapp.com"]
 
 ADMINS = [('renansiqueira', 'renansiqueira@gmail.com')]
 
@@ -71,10 +70,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'Main',
 
-    'sslserver', #TODO: DEV ONLY
+    #'sslserver', #TODO: DEV ONLY
 ]
 
-CRISPY_TEMPLATE_PACK =  'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -89,8 +88,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',   #prevent clickjacking
 ]
 
-CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 #X_FRAME_OPTIONS = 'SAMEORIGIN'
 ROOT_URLCONF = 'nutrition_app.urls'
 
@@ -121,27 +120,27 @@ WSGI_APPLICATION = 'nutrition_app.wsgi.application'
 # python manage.py migrate
 # python manage.py createsuperuser
 
-# DATABASES = {
-#      'default': {
-#          'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#          'NAME': 'd70b90u9f6om4h',
-#          'USER': 'kpxrkzhcjvwaca',
-#          'PASSWORD': 'c8432332aaaf015c02045f817d923341c43b038035c6e57abe118a170a2fce59',
-#          'HOST': 'ec2-34-232-24-202.compute-1.amazonaws.com',
-#          'PORT': '5432',
-#      }
-#  }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'nutrition',
-        'USER': 'postgres',
-        'PASSWORD': 'raquoasi',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-}
+     'default': {
+         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+         'NAME': 'd70b90u9f6om4h',
+         'USER': 'kpxrkzhcjvwaca',
+         'PASSWORD': 'c8432332aaaf015c02045f817d923341c43b038035c6e57abe118a170a2fce59',
+         'HOST': 'ec2-34-232-24-202.compute-1.amazonaws.com',
+         'PORT': '5432',
+     }
+ }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'nutrition',
+#         'USER': 'postgres',
+#         'PASSWORD': '',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
@@ -224,7 +223,7 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-SITE_ID = 4
+SITE_ID = 4 #TODO: site must be added to the database using ID=1!
 LOGIN_REDIRECT_URL = '/dashboard'
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_PROVIDERS = {
@@ -251,4 +250,4 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 #SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-#SECURE_SSL_REDIRECT = True
+#SECURE_SSL_REDIRECT = True #Not necessary in Heroku, goes automatically to https

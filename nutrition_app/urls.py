@@ -7,6 +7,7 @@ from rest_framework import routers
 from django.contrib.auth import views as auth_views
 from allauth.socialaccount import views as allauth_views
 from allauth.account import views as allauth_views2
+from Main.admin import admin_site
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
@@ -16,6 +17,7 @@ router.register(r'users', UserViewSet)
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
+                  path('myadmin/', admin_site.urls),
                   path('', include('Main.urls')),
                   path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(
                       template_name="registration/passwordResetConfirm.html",

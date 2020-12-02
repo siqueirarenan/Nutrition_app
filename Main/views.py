@@ -2,32 +2,23 @@ import copy
 import json
 from datetime import datetime
 from itertools import chain
-
-from allauth.socialaccount.models import SocialLogin
-from allauth.socialaccount.views import SignupView
-from django.core.exceptions import MultipleObjectsReturned
+from smtplib import SMTPException
+from string import Template
+from django.views.decorators.csrf import csrf_exempt
+from django_ajax.decorators import ajax
+from allauth.socialaccount.models import SocialAccount
 from django.core.mail import send_mail
-from django.db.models import Count
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
-from django.template import RequestContext
-from Main.forms import SignUpForm, LoginForm
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-from django.contrib.auth.password_validation import validate_password, ValidationError
 from django.contrib.auth.forms import UserCreationForm
-from django_ajax.decorators import ajax
-from django.http import HttpResponseRedirect, HttpResponse, HttpRequest
-from django.conf import settings
-from .models import *
-from django.contrib.auth.models import User
-from rest_framework import viewsets
+from django.http import HttpResponseRedirect, HttpResponse
 from rest_framework import permissions
 from Main.serializers import *
-import requests
 
 
-def homepage(request):
-    context = {}
+def homepage(request,msg_sent_bool=0):
+    context = {'msg_sent_bool': str(msg_sent_bool)}
     return render(request, 'Main/homepage.html', context)
 
 def dashboard(request):
@@ -35,15 +26,21 @@ def dashboard(request):
     date_passed = ""
     user = ""
     completed_tasks = []
+    social_user = None
     last_line_active = 0
     if request.user.is_authenticated:  #Otherwise, loads a case where everything is deactivated
         user = User.objects.get(username=request.user)
+        try:
+            social_user = SocialAccount.objects.get(user=user)
+        except:
+            pass
         try: #Otherwise, loads a case where everything is deactivated (when user has no group)
             user_group = UserGroup.objects.get(user=user)
             group = user_group.group
-            date_passed = (datetime.today().date() - group.date_begin).days
-            completed_tasks = user_group.completed_tasks.all()
-            last_line_active = group.last_task_line
+            if group.is_active:
+                date_passed = (datetime.today().date() - group.date_begin).days
+                completed_tasks = user_group.completed_tasks.all()
+                last_line_active = group.last_task_line
         except:
             pass
     #Group tasks by line
@@ -53,7 +50,8 @@ def dashboard(request):
     all_tasks_sub = [item for sublist in list(chain([list(chain(t.objects.all())) for t in AllTasks.__subclasses__()])) for item in sublist]
     keys = []
     for task in all_tasks_sub:
-        keys += [task.line_position]
+        if task.line_position > 0:
+            keys += [task.line_position]
     grouped_tasks = {}
     for k in set(keys):
         if k <= last_line_active:
@@ -61,18 +59,21 @@ def dashboard(request):
         else:
             grouped_tasks[k] = [[], ['none']]   #Deactivate tasks lines that are not defined for the group
     for task_sub in all_tasks_sub:
-        grouped_tasks[task_sub.line_position][0] += [[]]
-        grouped_tasks[task_sub.line_position][0][-1] += [task_sub]
-        task_all_tasks = copy.copy(task_sub)
-        task_all_tasks.__class__ = AllTasks
-        grouped_tasks[task_sub.line_position][0][-1] += ['#33ff33' if task_all_tasks in completed_tasks else '#eeeeee']
+        if task_sub.line_position > 0:
+            grouped_tasks[task_sub.line_position][0] += [[]]
+            grouped_tasks[task_sub.line_position][0][-1] += [task_sub]
+            task_all_tasks = copy.copy(task_sub)
+            task_all_tasks.__class__ = AllTasks
+            grouped_tasks[task_sub.line_position][0][-1] += ['#33ff33' if task_all_tasks in completed_tasks else '#eeeeee']
 
     context = {'user_request': request.user,
                'user': user,
                'group': group,
                'date_passed': date_passed,
                'grouped_tasks_values': grouped_tasks.values(),
-               'grouped_tasks_keys': grouped_tasks.keys()}
+               'grouped_tasks_keys': grouped_tasks.keys(),
+               'social_user': social_user
+               }
     return render(request, 'dashboard/dashboard.html', context)
 
 def registration(request):
@@ -90,7 +91,7 @@ def registration(request):
             return render(request, 'registration/registration.html', {'form':form})
     else:
         form = UserCreationForm()
-    return render(request, 'registration/registration.html', {'form':form})
+        return render(request, 'registration/registration.html', {'form':form})
 
 def signin(request):
     if request.user.is_authenticated:
@@ -150,10 +151,122 @@ def signout_done(request):
     u.save()
     return render(request, 'registration/signout_done.html', {})
 
-def recipes(request):
-    recipe = Recipe.objects.all()
-    context = {'recipes': recipe}
-    return render(request, 'Main/recipes.html', context)
+def recipes(request,recip_open):
+    recipes = Recipe.objects.all()
+    favourite_recipes = None
+    user_group = None
+    if request.user.is_authenticated:  #Otherwise, loads a case where everything is deactivated
+        user = User.objects.get(username=request.user)
+        try: #Otherwise, loads a case where everything is deactivated (when user has no group)
+            user_group = UserGroup.objects.get(user=user)
+            if user_group.group.is_active:
+                favourite_recipes = user_group.recipes.all()
+        except:
+            pass
+    context = {'recipes': recipes,
+               'favourite_recipes': favourite_recipes,
+               'recip_open': recip_open,
+               'user_group': user_group
+    }
+    return render(request, 'dashboard/recipes.html', context)
+
+@ajax
+def fav(request):
+    if request.user.is_authenticated:  #Otherwise, loads a case where everything is deactivated
+        user = User.objects.get(username=request.user)
+        try: #Otherwise, loads a case where everything is deactivated (when user has no group)
+            user_group = UserGroup.objects.get(user=user)
+            if request.POST['type'] == "recipe":
+                new_fav = Recipe.objects.get(name=request.POST['id'])
+                if request.POST['value'] == "1":
+                    user_group.recipes.add(new_fav)
+                else:
+                    user_group.recipes.remove(new_fav)
+            elif request.POST['type'] == "food":
+                new_fav = FoodPortion.objects.get(name=request.POST['id'])
+                if request.POST['value'] == "1":
+                    user_group.food.add(new_fav)
+                else:
+                    user_group.food.remove(new_fav)
+            user_group.save()
+        except:
+            pass
+
+def protocol(request,fg_open):
+    favourite_food = ""
+    protocol_meals = None
+    if request.user.is_authenticated:  #Otherwise, loads a case where everything is deactivated
+        user = User.objects.get(username=request.user)
+        try: #Otherwise, loads a case where everything is deactivated (when user has no group)
+            user_group = UserGroup.objects.get(user=user)
+            people_group = user_group.group
+            favourite_food = user_group.food.all()
+            if people_group.is_active:
+                group_protocol = people_group.protocol
+                protocol_meals = ProtocolMeal.objects.filter(
+                    protocol=group_protocol).order_by('meal_order')
+        except:
+            pass
+    context = {'food_groups': FoodGroup.objects.all(),
+               'favourite_food': favourite_food,
+               'fg_open': fg_open,
+               'protocol_meals': protocol_meals
+               }
+    return render(request, 'dashboard/protocol.html', context)
+
+def favourites(request):
+    favourite_recipes = None
+    favourite_food = None
+    if request.user.is_authenticated:
+        user = User.objects.get(username=request.user)
+        try:
+            user_group = UserGroup.objects.get(user=user)
+            if user_group.group.is_active:
+                favourite_recipes = user_group.recipes.all()
+                favourite_food = user_group.food.all()
+        except:
+            pass
+    if request.method == 'POST':
+        try:
+            new_fav = Recipe.objects.get(name=list(request.POST.keys())[1])
+            if list(request.POST.values())[1] == "1":
+                user_group.recipes.add(new_fav)
+            else:
+                user_group.recipes.remove(new_fav)
+        except:
+            new_fav = FoodPortion.objects.get(name=list(request.POST.keys())[1])
+            if list(request.POST.values())[1] == "1":
+                user_group.food.add(new_fav)
+            else:
+                user_group.food.remove(new_fav)
+        user_group.save()
+        return HttpResponse(status=204)
+    else:
+        context = {'favourite_recipes': favourite_recipes,
+                   'favourite_food': favourite_food,
+                   }
+        return render(request, 'dashboard/favourites.html', context)
+
+
+def contact_submit(request):
+    v_name = request.GET['Name']
+    v_email = request.GET['Email']
+    v_subject = request.GET['Subject']
+    v_comment = request.GET['Comment']
+    message_template = Template("APP CONTACT FORM\n\nName: ${NAME}\nEmail: ${EMAIL}\nSubject: ${SUBJECT}\n\nMessage:\n\n${MESSAGE}\n--")
+    message = message_template.substitute(NAME=v_name,EMAIL=v_email,SUBJECT=v_subject,MESSAGE=v_comment)
+
+    try:
+        send_mail(
+            v_name + " enviou uma menssagem",
+            message,
+            v_email,
+            ['acessoria.marcelasiqueira@gmail.com'],
+            fail_silently=False,
+        )
+        return HttpResponseRedirect("/1#contact")
+    except SMTPException:
+        return HttpResponseRedirect("/2#contact")
 
 
 """
@@ -287,10 +400,13 @@ def surveyresults(request, people_group):
         results = {}
         for survey in surveys:
             question_votes = group_votes.filter(question=survey.question)
-            answers = question_votes.annotate(Count('choice'))
+            #Count votes
             results[survey.question] = {}
-            for a in answers:
-                results[survey.question][str(a)] = a.choice__count
+            choices = survey.choices.splitlines()
+            for c in choices:
+                results[survey.question][str(c)] = 0
+            for v in question_votes:
+                results[survey.question][str(v.choice)] += 1
         surveys2 = WritingSurveyTask.objects.all()
         for survey in surveys2:
             question_votes = group_votes.filter(question=survey.question)

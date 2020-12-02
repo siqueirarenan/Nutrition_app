@@ -2,26 +2,27 @@
 
 {% block main %}
 
-<div class="w3-row w3-content w3-green w3-wide" style="max-width:1600px" id="home">
-  <div class="w3-col l6 m12 s12 w3-padding">
-    <h3>E-mail já cadastrado. Por favor entre com usuário e senha ou clique em "Esqueci minha senha".
+<div class="w3-center w3-content w3-wide" style="max-width:1600px;height:100%;background-color:#031C52" id="home">
+  <div class="w3-padding" style="max-width:600px;margin:auto">
+    <h3 class="w3-text-white">E-mail já cadastrado. Por favor entre com usuário e senha, ou clique em "Esqueci minha senha".
     <br>Para entrar com essa conta social, a conta regular deve ser cancelada.</h3>
-  </div>
+
   <a href="/">
-    <div class="w3-button w3-block w3-indigo">
+    <div class="w3-button w3-yellow"  style="margin-top:10px">
       Página inicial
     </div>
   </a>
   <a href="/login">
-    <div class="w3-button w3-block w3-indigo">
+    <div class="w3-button w3-yellow"  style="margin-top:10px">
       Entrar
     </div>
   </a>
   <a href="{% url 'Main:password_reset' %}">
-    <div class="w3-button w3-block w3-indigo">
+    <div class="w3-button w3-yellow"  style="margin-top:10px">
       Esqueci minha senha
     </div>
   </a>
+  </div>
 </div>
 
 {% endblock %}

@@ -2,9 +2,17 @@
 
 {% block main %}
 {% load static %}
-<div class="w3-content w3-wide" id="home" style="max-width:1600px">
-    <div class="w3-display-container w3-padding w3-white">
-        <img class="w3-image" src="{% static 'reset_capa.png' %}">
+
+
+<div class="w3-content w3-wide  " id="home" style="max-width:1400px">
+    <div class="w3-display-container w3-white" style="min-height:400px">
+        <img class="w3-image" style="min-height: 400px;object-fit: cover;" src="{% static 'cubes.jpg' %}">
+        <div class="w3-display-middle w3-center">
+            <h1 style="font-size:90px;color:#031C52 !important;text-shadow: 6px 6px yellow;
+                padding-top:100px">RESET</h1>
+            <h2 style="font-size:50px;color:orange;font-family: 'Dancing Script', cursive;
+                padding-bottom:100px">30 dias</h2>
+        </div>
     </div>
     <div class="w3-row"></div>
         <a href="/login">
@@ -13,47 +21,75 @@
             </div>
         </a>
         <a href="/registration">
-            <div class="w3-col l6 m12 s12 w3-button w3-padding-32 w3-amber">
-                <h2 class="w3-wide">Cadastre-se</h2>
+            <div class="w3-col l6 m12 s12 w3-button w3-padding-32" style="background-color:#031C52">
+                <h2 class="w3-wide" style="color:white">Cadastre-se</h2>
             </div>
         </a>
     </div>
 
 <!-- About Section -->
-<div class="w3-container w3-padding-32 " id="about">
-    <h3 class="w3-border-bottom w3-text-indigo w3-padding-16"><b>Sobre a criadora</b></h3>
+<div class="w3-container w3-padding-32 " id="about" style="max-width:1000px;margin:auto">
+<!--    <div class="w3-container w3-padding-32" >
+        <h3 class="w3-border-bottom w3-text-indigo w3-padding-16"><b>Sobre a criadora</b></h3>
 
-    <div class="w3-container" style="justify-content: center" >
-        <div class="w3-row-padding">
-            <div class="w3-col l3 m4 s12">
-                <img class="w3-padding" src="{% static 'marcela.png'%}" alt="Marcela" style="max-height:300px;width:auto">
-            </div>
-            <div class="w3-col l9 m12 s12">
-                <h4>Tudo o que você vivenciou fez com que você chegasse até
-                    aqui. Faz parte de quem você é e não há nada para se
-                    envergonhar. Corpos são cíclicos, e tudo bem, não estou aqui
-                    para te julgar. Tudo o que temos é o agora, hoje e aqui. Então
-                    chegou a hora de respirar fundo, deixar para trás o que passou
-                    e focar no agora. É hora de dar um RESET nos comandos
-                    errados que você tem a tanto tempo enviado ao seu corpo. É
-                    hora de se REcompor, REdefinir metas e REestabelecer o
-                    controle da sua vida. Hora de fazer dar certo!
-                </h4>
-                <h2 class="w3-padding w3-serif" style="margin:auto">
-                    <i>"Você está a um clique de fazer parte desse time!
-                        Vamos juntos?"</i>
-                </h2>
-            </div>
+        <div class="w3-container" style="justify-content: center" >
+            <div class="w3-row-padding">
+                <div class="w3-col l3 m4 s12">
+                    <img class="w3-padding" src="{% static 'marcela.png'%}" alt="Marcela" style="max-height:300px;width:auto">
+                </div>
+                <div class="w3-col l9 m12 s12">
+                    <h4>Tudo o que você vivenciou fez com que você chegasse até
+                        aqui. Faz parte de quem você é e não há nada para se
+                        envergonhar. Corpos são cíclicos, e tudo bem, não estou aqui
+                        para te julgar. Tudo o que temos é o agora, hoje e aqui. Então
+                        chegou a hora de respirar fundo, deixar para trás o que passou
+                        e focar no agora. É hora de dar um RESET nos comandos
+                        errados que você tem a tanto tempo enviado ao seu corpo. É
+                        hora de se REcompor, REdefinir metas e REestabelecer o
+                        controle da sua vida. Hora de fazer dar certo!
+                    </h4>
+                    <h2 class="w3-padding w3-serif" style="margin:auto">
+                        <i>"Você está a um clique de fazer parte desse time!
+                            Vamos juntos?"</i>
+                    </h2>
+                </div>
 
-            <span class="w3-right-align w3-block" id="socialNetworks">
-              <a href="" target="_blank" >
-                <img class="w3-image w3-padding" src="{% static 'instagram.png' %}" style="width:93px"></a>
-              <a href="" target="_blank" style="width:80px">
-                <img class="w3-image w3-padding" src="{% static 'facebook.png' %}" style="width:100px"></a>
-          </span>
+                <span class="w3-right-align w3-block" id="socialNetworks">
+                  <a href="" target="_blank" >
+                    <img class="w3-image w3-padding" src="{% static 'instagram.png' %}" style="width:93px"></a>
+                  <a href="" target="_blank" style="width:80px">
+                    <img class="w3-image w3-padding" src="{% static 'facebook.png' %}" style="width:100px"></a>
+              </span>
+            </div>
         </div>
+    </div>-->
+
+    <!-- Contact Section -->
+    <div class="w3-container w3-padding-32" id="contact">
+        <h3 class="w3-border-bottom w3-padding-16" style="color:#031C52">Contato</h3>
+        <p>Por favor, entre em contato caso você tenha alguma dúvida ou requisição.</p>
+        <!--    <a href="mailto:renansiqueira@gmail.com?subject=Website Enquiry" >renansiqueira@gmail.com</a>-->
+
+        <form action="{% url 'Main:contact_submit' %}" method="get">  <!-- tag url call function from Main.urls-file by its "name", with the urls adress parameters -->
+
+            <input class="w3-input w3-border" type="text" placeholder="Nome" required name="Name" value="{{ v_name }}">
+            <input class="w3-input w3-section w3-border" type="text" placeholder="E-mail" required name="Email" value="{{ v_email }}">
+            <input class="w3-input w3-section w3-border" type="text" placeholder="Assunto" required name="Subject" value="{{ v_subject }}">
+            <input class="w3-input w3-section w3-border" type="text" placeholder="Mensagem" required name="Comment" value="{{ v_comment }}">
+            {% if msg_sent_bool == "0" %}
+            <button class="w3-button w3-yellow w3-section" type="submit">Enviar mensagem</button>
+            {% endif %}
+            {% if msg_sent_bool == "1" %}
+            <div class="w3-text-grey"> <p> Sua menssagem foi enviada. </p> </div>
+            {% endif %}
+            {% if msg_sent_bool == "2" %}
+            <div class="w3-text-red"> <p> Me desculpe, há um problema no servidor. Por favor, mande seu e-mail diretamente para acessoria.marcelasiqueira@gmail.com </p> </div>
+            {% endif %}
+        </form>
     </div>
-</div>
 
 </div>
+
+<div style="height:100px"></div>
+
 {% endblock %}

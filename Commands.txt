@@ -1,0 +1,47 @@
+python manage.py shell
+
+python manage.py makemigrations
+python manage.py migrate
+
+python manage.py createsuperuser
+
+python manage.py runserver 127.0.0.1:8080
+
+
+
+CONFIGURATION COMMANDS
+
+- For running locally with Heroku:
+python manage.py collectstatic
+heroku local web -f Procfile.windows
+
+- if collectstatic fails:
+heroku config:set DEBUG_COLLECTSTATIC=1
+
+
+### FOR PRODUCTION
+PUSH TO HEROKU
+
+git commit -am "comments"
+
+git push heroku master
+ou
+git push heroku development-branch:master
+
+- check in the Databases, "Sites"
+- check Google and FB domains in their consoles
+
+
+
+
+localtunnel
+lt --port 8080 --subdomain reset-challenge-30d
+
+
+
+
+
+
+acessoria.marcelasiqueira@gmail.com
+moreira97
+

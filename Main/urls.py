@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
 
@@ -6,6 +6,8 @@ from . import views
 app_name = 'Main'
 urlpatterns = [
     path('', views.homepage, name='homepage'),
+    path('<int:msg_sent_bool>', views.homepage, name='homepage'),
+    path('contact_submit/', views.contact_submit, name='contact_submit'),
 
     path('registration/', views.registration, name='registration'),
     path('login/', views.signin, name="login"),
@@ -23,8 +25,10 @@ urlpatterns = [
     path('signout/', views.signout, name='signout'),
     path('signout/done', views.signout_done, name='signout_done'),
 
-
-    path('dashboard/recipes', views.recipes, name="recipes"),
+    path('dashboard/fav', views.fav, name="fav"), #ajax no response url
+    path('dashboard/recipes/<str:recip_open>', views.recipes, name="recipes"),
+    path('dashboard/protocol/<str:fg_open>', views.protocol, name="protocol"),
+    path('dashboard/favourites', views.favourites, name="favourites"),
 
 
     #ADMIN

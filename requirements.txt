@@ -1,8 +1,14 @@
 psycopg2-binary
+psycopg2
+gunicorn     #Necessary for Heroku
+django_heroku #Necessary for Heroku
 dj-database-url
-djangoajax
+djangoajax~=3.2
 whitenoise
-djangorestframework
+djangorestframework~=3.12.2
 markdown
 Pillow
-requests
+requests~=2.22.0
+django-allauth
+Django~=3.1.2
+django-crispy-forms
