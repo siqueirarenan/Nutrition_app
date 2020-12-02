@@ -44,7 +44,7 @@ f.close()
 SECRET_KEY = key[0]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False     #TODO: DEV ONLY
+DEBUG = True     #TODO: DEV ONLY
 ALLOWED_HOSTS = ["localhost", "127.0.0.1",".herokuapp.com"]
 
 ADMINS = [('renansiqueira', 'renansiqueira@gmail.com')]
@@ -183,7 +183,7 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') #for Heroku
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
