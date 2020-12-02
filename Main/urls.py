@@ -25,7 +25,7 @@ urlpatterns = [
     path('signout/', views.signout, name='signout'),
     path('signout/done', views.signout_done, name='signout_done'),
 
-
+    path('dashboard/fav', views.fav, name="fav"), #ajax no response url
     path('dashboard/recipes/<str:recip_open>', views.recipes, name="recipes"),
     path('dashboard/protocol/<str:fg_open>', views.protocol, name="protocol"),
     path('dashboard/favourites', views.favourites, name="favourites"),

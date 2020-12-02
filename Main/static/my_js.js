@@ -25,14 +25,17 @@ function accordion(id) {
   }
 }
 
-function favourite(di) {
+
+function favourite(di,type) {
     if (document.getElementById(di.concat("r")).value == 0) {
         document.getElementById(di.concat("r")).value = 1;
         document.getElementById(di.concat("h")).className = "fas fa-heart";
-        jQuery.post('recipes',1)
+        const csrftoken = Cookies.get('csrftoken');
+        jQuery.post('/dashboard/fav',{'csrfmiddlewaretoken': csrftoken,'id':di,'value':1,'type':type})
     } else {
         document.getElementById(di.concat("r")).value = 0;
         document.getElementById(di.concat("h")).className = "far fa-heart";
-        jQuery.post('recipes',0)
+        const csrftoken = Cookies.get('csrftoken');
+        jQuery.post('/dashboard/fav',{'csrfmiddlewaretoken': csrftoken,'id':di,'value':0,'type':type})
     }
 }

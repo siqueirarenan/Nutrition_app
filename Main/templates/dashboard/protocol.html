@@ -122,18 +122,17 @@
                         <tr style="border-bottom:1px solid grey;border-collapse: collapse;">
 
                             <th style="width:50px">
-                                <form method="POST">
-                                    {% csrf_token %}
+
                                     <input type="hidden" id="{{ portion.name }}r" name="{{ portion.name }}" value="
                                                    {% if portion in favourite_food %}1{%else%}0{%endif%}">
-                                    <button class="w3-col w3-border-0" onclick="favourite('{{ portion.name }}')"
+                                    <button class="w3-col w3-border-0" onclick="favourite('{{ portion.name }}','food')"
                                             style="height:50px;width:50px;display:inline;
                                             background-color:transparent;margin-top:-10px;outline:none;" >
                                         <i class='{% if portion in favourite_food %}
                                     fas fa-heart{%else%}far fa-heart{%endif%}' id="{{ portion.name }}h"
                                            style='font-size:30px;margin-top:0px;color:#031C52 !important'></i>
                                     </button>
-                                </form>
+
                             </th>
 
                             <th  style="border-bottom:1px solid grey;border-collapse: collapse;">

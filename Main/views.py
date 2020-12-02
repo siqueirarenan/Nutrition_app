@@ -4,6 +4,7 @@ from datetime import datetime
 from itertools import chain
 from smtplib import SMTPException
 from string import Template
+from django.views.decorators.csrf import csrf_exempt
 from django_ajax.decorators import ajax
 from allauth.socialaccount.models import SocialAccount
 from django.core.mail import send_mail
@@ -150,7 +151,6 @@ def signout_done(request):
     u.save()
     return render(request, 'registration/signout_done.html', {})
 
-@ajax
 def recipes(request,recip_open):
     recipes = Recipe.objects.all()
     favourite_recipes = None
@@ -163,26 +163,36 @@ def recipes(request,recip_open):
                 favourite_recipes = user_group.recipes.all()
         except:
             pass
-    if request.method == 'POST':
-        new_fav = Recipe.objects.get(name=list(request.POST.keys())[1])
-        if list(request.POST.values())[1] == "1":
-            user_group.recipes.add(new_fav)
-        else:
-            user_group.recipes.remove(new_fav)
-        user_group.save()
-        #return HttpResponse(status=200)
-    else:
-        print(favourite_recipes)
-        context = {'recipes': recipes,
-                   'favourite_recipes': favourite_recipes,
-                   'recip_open': recip_open,
-                   'user_group': user_group
-        }
-        return render(request, 'dashboard/recipes.html', context)
+    context = {'recipes': recipes,
+               'favourite_recipes': favourite_recipes,
+               'recip_open': recip_open,
+               'user_group': user_group
+    }
+    return render(request, 'dashboard/recipes.html', context)
 
+@ajax
+def fav(request):
+    if request.user.is_authenticated:  #Otherwise, loads a case where everything is deactivated
+        user = User.objects.get(username=request.user)
+        try: #Otherwise, loads a case where everything is deactivated (when user has no group)
+            user_group = UserGroup.objects.get(user=user)
+            if request.POST['type'] == "recipe":
+                new_fav = Recipe.objects.get(name=request.POST['id'])
+                if request.POST['value'] == "1":
+                    user_group.recipes.add(new_fav)
+                else:
+                    user_group.recipes.remove(new_fav)
+            elif request.POST['type'] == "food":
+                new_fav = FoodPortion.objects.get(name=request.POST['id'])
+                if request.POST['value'] == "1":
+                    user_group.food.add(new_fav)
+                else:
+                    user_group.food.remove(new_fav)
+            user_group.save()
+        except:
+            pass
 
 def protocol(request,fg_open):
-    user_group = ""
     favourite_food = ""
     protocol_meals = None
     if request.user.is_authenticated:  #Otherwise, loads a case where everything is deactivated
@@ -197,22 +207,12 @@ def protocol(request,fg_open):
                     protocol=group_protocol).order_by('meal_order')
         except:
             pass
-    if request.method == 'POST':
-        new_fav = FoodPortion.objects.get(name=list(request.POST.keys())[1])
-        if list(request.POST.values())[1] == "1":
-            user_group.food.add(new_fav)
-            user_group.save()
-        else:
-            user_group.food.remove(new_fav)
-            user_group.save()
-        return HttpResponse(status=204)
-    else:
-        context = {'food_groups': FoodGroup.objects.all(),
-                   'favourite_food': favourite_food,
-                   'fg_open': fg_open,
-                   'protocol_meals': protocol_meals
-                   }
-        return render(request, 'dashboard/protocol.html', context)
+    context = {'food_groups': FoodGroup.objects.all(),
+               'favourite_food': favourite_food,
+               'fg_open': fg_open,
+               'protocol_meals': protocol_meals
+               }
+    return render(request, 'dashboard/protocol.html', context)
 
 def favourites(request):
     favourite_recipes = None

@@ -12,15 +12,13 @@
     {% for r in favourite_recipes %}
     <div  class="w3-card4 w3-row w3-block w3-hover-yellow w3-button w3-yellow w3-round w3-leftbar w3-rightbar w3-border w3-border-amber"
     style="height:70px;margin-top:5px;">
-        <form method="POST">
-            {% csrf_token %}
+
             <input type="hidden" id="{{ r.name }}r" name="{{ r.name }}" value="1">
-            <button class="w3-col w3-border-0" onclick="favourite('{{ r.name }}')" style="height:70px;width:70px;display:inline;
+            <button class="w3-col w3-border-0" onclick="favourite('{{ r.name }}','recipe')" style="height:70px;width:70px;display:inline;
             background-color:transparent;margin-top:-10px;outline:none;}" >
                 <i class='fas fa-heart' id="{{ r.name }}h" style='font-size:48px;margin-top:0px;color:orange'></i>
             </button>
 
-        </form>
         <div class="w3-col" onclick="accordion('{{ r.name }}')" style="height:70px;width:calc(100% - 80px);">
             <h2 style="margin-top:4px">{{ r.name }}</h2>
         </div>
@@ -52,16 +50,15 @@
         <tr style="border-bottom:1px solid grey;border-collapse: collapse;">
 
             <th style="width:50px">
-                <form method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" id="{{ f.name }}r" name="{{ f.name }}" value="1">
-                    <button class="w3-col w3-border-0" onclick="favourite('{{ f.name }}')"
-                            style="height:50px;width:50px;display:inline;
-                                        background-color:transparent;margin-top:-10px;outline:none;" >
-                        <i class='fas fa-heart' id="{{ f.name }}h"
-                           style='font-size:30px;margin-top:0px;color:#031C52 !important'></i>
-                    </button>
-                </form>
+
+                <input type="hidden" id="{{ f.name }}r" name="{{ f.name }}" value="1">
+                <button class="w3-col w3-border-0" onclick="favourite('{{ f.name }}','food')"
+                        style="height:50px;width:50px;display:inline;
+                                    background-color:transparent;margin-top:-10px;outline:none;" >
+                    <i class='fas fa-heart' id="{{ f.name }}h"
+                       style='font-size:30px;margin-top:0px;color:#031C52 !important'></i>
+                </button>
+
             </th>
             <th  style="border-bottom:1px solid grey;border-collapse: collapse;">
                 <h4 style="text-align:left">{{ f.name }}</h4>
