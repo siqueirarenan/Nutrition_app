@@ -31,7 +31,9 @@ git push heroku development-branch:master
 - check in the Databases, "Sites"
 - check Google and FB domains in their consoles
 
-
+#Comandos dentro do hetroku
+heroku run python manage.py shell --app reset-challenge
+heroku run python manage.py collectstatic --app reset-challenge
 
 
 localtunnel

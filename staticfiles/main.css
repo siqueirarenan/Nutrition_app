@@ -29,13 +29,15 @@ border: 5px
 
 @media (max-width:768px){
     .my-top{
-        bottom:0
+        bottom:0;
+        height:80px;
         }
     }
 
 @media (min-width:768px){
     .my-top{
-        top:0
+        top:0;
+        height:60px;
         }
     }
 

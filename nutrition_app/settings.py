@@ -47,8 +47,6 @@ SECRET_KEY = key[0]
 DEBUG = False     #TODO: DEV ONLY
 ALLOWED_HOSTS = ["localhost", "127.0.0.1",".herokuapp.com"]
 
-WHITENOISE_AUTOREFRESH = True
-
 ADMINS = [('renansiqueira', 'renansiqueira@gmail.com')]
 
 # Application definition
@@ -89,6 +87,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',   #prevent clickjacking
 ]
+
+WHITENOISE_AUTOREFRESH = True
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
@@ -185,8 +185,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') #for Heroku
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())

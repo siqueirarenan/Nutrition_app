@@ -103,7 +103,7 @@ class ChallengeTask(AllTasks):
     task_type = 'challenge'
     title = models.CharField(max_length=500, default="")
     text = models.TextField(default="", blank=True,)
-    image = models.ImageField(upload_to='DB_images')
+    #image = models.ImageField(upload_to='static/DB_images')
 
 class MultipleChoiceSurveyTask(AllTasks):
     task_type = 'multiple_choice_survey'
