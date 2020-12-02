@@ -4,7 +4,7 @@ from datetime import datetime
 from itertools import chain
 from smtplib import SMTPException
 from string import Template
-
+from django_ajax.decorators import ajax
 from allauth.socialaccount.models import SocialAccount
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
@@ -150,6 +150,7 @@ def signout_done(request):
     u.save()
     return render(request, 'registration/signout_done.html', {})
 
+@ajax
 def recipes(request,recip_open):
     recipes = Recipe.objects.all()
     favourite_recipes = None
@@ -178,6 +179,7 @@ def recipes(request,recip_open):
                    'user_group': user_group
         }
         return render(request, 'dashboard/recipes.html', context)
+
 
 def protocol(request,fg_open):
     user_group = ""

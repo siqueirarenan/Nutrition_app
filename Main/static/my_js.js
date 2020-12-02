@@ -29,8 +29,10 @@ function favourite(di) {
     if (document.getElementById(di.concat("r")).value == 0) {
         document.getElementById(di.concat("r")).value = 1;
         document.getElementById(di.concat("h")).className = "fas fa-heart";
+        jQuery.post('recipes',1)
     } else {
         document.getElementById(di.concat("r")).value = 0;
         document.getElementById(di.concat("h")).className = "far fa-heart";
+        jQuery.post('recipes',0)
     }
 }
