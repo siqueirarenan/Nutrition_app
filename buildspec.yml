@@ -3,6 +3,6 @@ version: 0.1
 phases:
   build:
     commands:
-      - docker image build -t ${ECR_REPO}:latest .
+      - docker image build -t Reset_tag .
       - $(aws ecr get-login --no-include-email --region sa-east-1)
-      - docker push ${ECR_REPO}:latest
+      - docker push Reset_tag
