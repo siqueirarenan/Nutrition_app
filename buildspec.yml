@@ -1,0 +1,8 @@
+version: 0.1
+
+phases:
+  build:
+    commands:
+      - docker image build -t ${ECR_REPO}:latest .
+      - $(aws ecr get-login --no-include-email --region sa-east-1)
+      - docker push ${ECR_REPO}:latest
