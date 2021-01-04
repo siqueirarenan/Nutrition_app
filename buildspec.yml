@@ -3,6 +3,6 @@ version: 0.1
 phases:
   build:
     commands:
-      - docker image build -t reset_tag .
+      - docker image build -t 322502383001.dkr.ecr.sa-east-1.amazonaws.com/reset-challenge:latest .
       - $(aws ecr get-login --no-include-email --region sa-east-1)
-      - docker push reset_tag
+      - docker push 322502383001.dkr.ecr.sa-east-1.amazonaws.com/reset-challenge:latest
