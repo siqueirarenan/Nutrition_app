@@ -1,6 +1,6 @@
 FROM python:3
 ENV PYTHONUNBUFFERED=1
-WORKDIR /
-COPY requirements.txt /
+WORKDIR /test
+COPY requirements.txt /test/
 RUN pip install -r requirements.txt
-COPY . /
+COPY . /test/

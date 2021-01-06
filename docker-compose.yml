@@ -4,14 +4,14 @@ services:
   db:
     image: postgres
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=d70b90u9f6om4h
+      - POSTGRES_USER=kpxrkzhcjvwaca
+      - POSTGRES_PASSWORD=c8432332aaaf015c02045f817d923341c43b038035c6e57abe118a170a2fce59
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:80
     volumes:
-      - .:/
+      - .:/test/
     ports:
       - "80:80"
     depends_on:
