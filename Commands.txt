@@ -45,3 +45,13 @@ lt --port 8080 --subdomain reset-challenge-30d
 acessoria.marcelasiqueira@gmail.com
 moreira97
 
+
+
+#Send Docker to AWS ECS
+##Login
+aws ecr get-login-password --region sa-east-1 | docker login --username AWS --password-stdin 322502383001.dkr.ecr.s
+a-east-1.amazonaws.com
+##Tag image
+docker tag reset-challenge:latest 322502383001.dkr.ecr.sa-east-1.amazonaws.com/reset-challenge
+##Push docker image
+docker push 322502383001.dkr.ecr.sa-east-1.amazonaws.com/reset-challenge:latest
