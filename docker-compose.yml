@@ -1,5 +1,5 @@
 version: "3.3"
-   
+   # DEFINIR NO TASK DEFINITION DO ECS
 services:
   db:
     image: postgres

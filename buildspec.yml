@@ -1,11 +1,8 @@
 version: 0.1
-
+# Coisas para rodar no build do pipeline (só construir as imagens e dar o push pro ECS)
 phases:
   build:
     commands:
-      #- docker-compose up
-      #- docker context create ecs RC
-      #- docker compose up -c RC
       - docker image build -t 322502383001.dkr.ecr.sa-east-1.amazonaws.com/reset-challenge:latest .
       #- $(aws ecr get-login --no-include-email --region sa-east-1| docker login --username AWS --password-stdin 322502383001.dkr.ecr.sa-east-1.amazonaws.com)
       - docker push 322502383001.dkr.ecr.sa-east-1.amazonaws.com/reset-challenge:latest
