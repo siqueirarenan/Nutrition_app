@@ -1,25 +1,18 @@
 version: "3.9"
    
 services:
-  web:
-    image: 322502383001.dkr.ecr.sa-east-1.amazonaws.com/reset-challenge:latest
-    command: python manage.py runserver 0.0.0.0:80
+  db:
+    image: postgres
     environment:
-      - SQS_QUEUE_URL=https://sqs.sa-east-1.amazonaws.com/322502383001/main-queue
-      - EFS_SOURCE_FOLDER=/data/sourcefolder/
-      - EFS_DESTINATION_FOLDER=/data/destinationfolder/
-      - AWS_REGION=sa-east-1
+      - POSTGRES_DB=d70b90u9f6om4h
+      - POSTGRES_USER=kpxrkzhcjvwaca
+      - POSTGRES_PASSWORD=c8432332aaaf015c02045f817d923341c43b038035c6e57abe118a170a2fce59
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:80
     volumes:
       - .:/code2/
     ports:
       - "80:80"
     depends_on:
       - db
-    x-aws-role:
-      Version: '2012-10-17'
-      Statement:
-        - Effect: Allow
-          Action: sqs:*
-          Resource: arn:aws:sqs:sa-east-1:322502383001:main-queue
-volumes:
-  efs-share:
