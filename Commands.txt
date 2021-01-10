@@ -55,3 +55,24 @@ a-east-1.amazonaws.com
 docker tag reset-challenge:latest 322502383001.dkr.ecr.sa-east-1.amazonaws.com/reset-challenge
 ##Push docker image
 docker push 322502383001.dkr.ecr.sa-east-1.amazonaws.com/reset-challenge:latest
+
+#Send Docker-compose to AWS (creates cloudformation automatically)
+## test
+docker-compose up -d --build
+docker-compose down
+
+docker context create ecs --local-simulation ecsLocal
+docker context use ecsLocal
+docker compose up
+
+
+## Context (changes where docker points the build, default is local)
+docker context create ecs context-name  (use access and secret keys, or profile)
+docker compose up -c context-name
+
+
+(aws ecr get-login-password --region sa-east-1) | docker login --password-stdin --username AWS 322502383001.dkr.ec
+r.sa-east-1.amazonaws.com/ecsworker
+
+
+docker compose up
