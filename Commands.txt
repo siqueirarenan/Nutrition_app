@@ -54,8 +54,7 @@ docker-compose up -d --build
 docker-compose down
 
 ##Login
-aws ecr get-login-password --region sa-east-1 | docker login --username AWS --password-stdin 322502383001.dkr.ecr.s
-a-east-1.amazonaws.com
+aws ecr get-login-password --region sa-east-1 | docker login --username AWS --password-stdin 322502383001.dkr.ecr.sa-east-1.amazonaws.com
 ##Tag imagens
 docker tag reset-challenge:latest 322502383001.dkr.ecr.sa-east-1.amazonaws.com/reset-challenge
 docker tag postgres:latest 322502383001.dkr.ecr.sa-east-1.amazonaws.com/postgres:latest
@@ -91,99 +90,148 @@ docker compose up
 
 
 
-JSON
+JSON TASK DEFINITION
 
 {
-    "requiresCompatibilities": [
-        "FARGATE"
-    ],
-    "containerDefinitions": [
+  "ipcMode": null,
+  "executionRoleArn": null,
+  "containerDefinitions": [
+    {
+      "dnsSearchDomains": null,
+      "environmentFiles": null,
+      "logConfiguration": null,
+      "entryPoint": null,
+      "portMappings": [],
+      "command": null,
+      "linuxParameters": null,
+      "cpu": 0,
+      "environment": [
         {
-            "name": "RC",
-            "image": "322502383001.dkr.ecr.sa-east-1.amazonaws.com/reset-challenge:latest",
-            "resourceRequirements": null,
-            "essential": true,
-            "portMappings": [
-                {
-                    "containerPort": "80",
-                    "protocol": "tcp"
-                }
-            ],
-            "command": [
-                "python manage.py runserver 0.0.0.0:80"
-            ],
-            "environment": null,
-            "environmentFiles": [],
-            "secrets": null,
-            "mountPoints": null,
-            "volumesFrom": null,
-            "hostname": null,
-            "user": null,
-            "workingDirectory": "/code2/",
-            "extraHosts": null,
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "awslogs-group": "/ecs/RCfinalTask",
-                    "awslogs-region": "sa-east-1",
-                    "awslogs-stream-prefix": "ecs"
-                }
-            },
-            "ulimits": null,
-            "dockerLabels": null,
-            "dependsOn": null,
-            "repositoryCredentials": {
-                "credentialsParameter": ""
-            }
+          "name": "POSTGRES_DB",
+          "value": "d70b90u9f6om4h"
         },
         {
-            "name": "postgres",
-            "image": "322502383001.dkr.ecr.sa-east-1.amazonaws.com/postgres:latest",
-            "resourceRequirements": null,
-            "essential": true,
-            "portMappings": [],
-            "environment": [
-                {
-                    "name": "POSTGRES_DB",
-                    "value": "d70b90u9f6om4h"
-                },
-                {
-                    "name": "POSTGRES_USER",
-                    "value": "kpxrkzhcjvwaca"
-                },
-                {
-                    "name": "POSTGRES_PASSWORD",
-                    "value": "c8432332aaaf015c02045f817d923341c43b038035c6e57abe118a170a2fce59"
-                }
-            ],
-            "environmentFiles": [],
-            "secrets": null,
-            "mountPoints": null,
-            "volumesFrom": null,
-            "hostname": null,
-            "user": null,
-            "workingDirectory": null,
-            "extraHosts": null,
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "awslogs-group": "/ecs/RCfinalTask",
-                    "awslogs-region": "sa-east-1",
-                    "awslogs-stream-prefix": "ecs"
-                }
-            },
-            "ulimits": null,
-            "dockerLabels": null,
-            "dependsOn": null
+          "name": "POSTGRES_PASSWORD",
+          "value": "c8432332aaaf015c02045f817d923341c43b038035c6e57abe118a170a2fce59"
+        },
+        {
+          "name": "POSTGRES_USER",
+          "value": "kpxrkzhcjvwaca"
         }
-    ],
-    "volumes": [],
-    "networkMode": "awsvpc",
-    "memory": "512",
-    "cpu": "256",
-    "executionRoleArn": "arn:aws:iam::322502383001:role/ecsTaskExecutionRole",
-    "family": "RCfinalTask",
-    "taskRoleArn": "arn:aws:iam::322502383001:role/ecsTaskExecutionRole",
-    "placementConstraints": [],
-    "tags": []
+      ],
+      "resourceRequirements": null,
+      "ulimits": null,
+      "dnsServers": null,
+      "mountPoints": [],
+      "workingDirectory": null,
+      "secrets": null,
+      "dockerSecurityOptions": null,
+      "memory": 128,
+      "memoryReservation": null,
+      "volumesFrom": [],
+      "stopTimeout": null,
+      "image": "322502383001.dkr.ecr.sa-east-1.amazonaws.com/postgres:latest",
+      "startTimeout": null,
+      "firelensConfiguration": null,
+      "dependsOn": null,
+      "disableNetworking": null,
+      "interactive": null,
+      "healthCheck": null,
+      "essential": false,
+      "links": null,
+      "hostname": null,
+      "extraHosts": null,
+      "pseudoTerminal": null,
+      "user": null,
+      "readonlyRootFilesystem": null,
+      "dockerLabels": null,
+      "systemControls": null,
+      "privileged": null,
+      "name": "DB"
+    },
+    {
+      "dnsSearchDomains": null,
+      "environmentFiles": null,
+      "logConfiguration": null,
+      "entryPoint": null,
+      "portMappings": [
+        {
+          "hostPort": 8080,
+          "protocol": "tcp",
+          "containerPort": 80
+        }
+      ],
+      "command": [],
+      "linuxParameters": null,
+      "cpu": 0,
+      "environment": [],
+      "resourceRequirements": null,
+      "ulimits": null,
+      "dnsServers": null,
+      "mountPoints": [],
+      "workingDirectory": null,
+      "secrets": null,
+      "dockerSecurityOptions": null,
+      "memory": 128,
+      "memoryReservation": null,
+      "volumesFrom": [],
+      "stopTimeout": null,
+      "image": "322502383001.dkr.ecr.sa-east-1.amazonaws.com/reset-challenge:latest",
+      "startTimeout": null,
+      "firelensConfiguration": null,
+      "dependsOn": [
+        {
+          "containerName": "DB",
+          "condition": "START"
+        }
+      ],
+      "disableNetworking": null,
+      "interactive": null,
+      "healthCheck": null,
+      "essential": true,
+      "links": null,
+      "hostname": null,
+      "extraHosts": null,
+      "pseudoTerminal": null,
+      "user": null,
+      "readonlyRootFilesystem": null,
+      "dockerLabels": null,
+      "systemControls": null,
+      "privileged": null,
+      "name": "RM"
+    }
+  ],
+  "placementConstraints": [],
+  "memory": "300",
+  "taskRoleArn": null,
+  "compatibilities": [
+    "EC2"
+  ],
+  "taskDefinitionArn": "arn:aws:ecs:sa-east-1:322502383001:task-definition/ResetMethod-task:13",
+  "family": "ResetMethod-task",
+  "requiresAttributes": [
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
+      "targetId": null,
+      "targetType": null,
+      "value": null,
+      "name": "ecs.capability.container-ordering"
+    }
+  ],
+  "pidMode": null,
+  "requiresCompatibilities": [
+    "EC2"
+  ],
+  "networkMode": null,
+  "cpu": "200",
+  "revision": 13,
+  "status": "ACTIVE",
+  "inferenceAccelerators": null,
+  "proxyConfiguration": null,
+  "volumes": []
 }

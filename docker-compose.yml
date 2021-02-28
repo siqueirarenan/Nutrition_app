@@ -9,10 +9,9 @@ services:
       - POSTGRES_PASSWORD=c8432332aaaf015c02045f817d923341c43b038035c6e57abe118a170a2fce59
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:80
     volumes:
-      - .:/code2/
+      - .:/code/
     ports:
-      - "80:80"
+      - "8080:80"
     depends_on:
       - db
